@@ -1,0 +1,161 @@
+% ==============================================================================
+% WEEK 2
+% ==============================================================================
+\section{Week 2 -- 23.02.26 Cauchy's Riemann and Differentiation}
+
+\textbf{Recall:} A function $f: \mathbb{C} \rightarrow \mathbb{C}$ is complex differentiable at $z_{0}$ if the limit
+$$ f'(z_{0}) = \lim_{z \rightarrow z_{0}} \frac{f(z) - f(z_{0})}{z - z_{0}} $$
+exists and is finite. Analogous to the definition of the derivative of a real function in Analysis I \& II.
+
+\subsection{Cauchy-Riemann equations}
+
+\begin{theorem}[Theorem: Cauchy-Riemann equations]
+Let $W$ be an open set and $f: W \rightarrow \mathbb{C}$, $z = x + iy \mapsto f(x+iy) = u(x,y) + iv(x,y)$ be a holomorphic function. Then, $u, v \in C^{1}(W)$ (differentiable with continuous derivatives) and:
+$$ \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} $$
+$$ \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x} $$
+
+Conversely, if these are satisfied (and $u, v \in C^1$), then $f$ is holomorphic.
+\end{theorem}
+We will prove the direct implication (the converse is more difficult).
+
+\textbf{Proof:} If $f$ is holomorphic on $W$, then for $z_0 \in W$:
+$$ f'(z_{0}) = \lim_{z \rightarrow z_{0}} \frac{f(z) - f(z_{0})}{z - z_{0}} $$
+We will calculate the limit in two ways: $z = x + iy$, $z_{0} = x_{0} + iy_{0}$.
+
+\textbf{1. Approaching $z_{0}$ from the x-direction ($y = y_0 \implies z = x + iy_{0}$):}
+\begin{align*}
+f'(z_{0}) &= \lim_{x \rightarrow x_{0}} \frac{f(x + iy_{0}) - f(x_{0} + iy_{0})}{x + iy_{0} - (x_{0} + iy_{0})} \\
+&= \lim_{x \rightarrow x_{0}} \frac{u(x, y_{0}) + iv(x, y_{0}) - u(x_{0}, y_{0}) - iv(x_{0}, y_{0})}{x - x_{0}} \\
+&= \lim_{x \rightarrow x_{0}} \frac{u(x, y_{0}) - u(x_{0}, y_{0})}{x - x_{0}} + i \lim_{x \rightarrow x_{0}} \frac{v(x, y_{0}) - v(x_{0}, y_{0})}{x - x_{0}} \\
+&= \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x} \quad \text{--- (1)}
+\end{align*}
+
+\textbf{2. Approaching $z_{0}$ from the y-direction ($x = x_0 \implies z = x_{0} + iy$):}
+\begin{align*}
+f'(z_{0}) &= \lim_{y \rightarrow y_{0}} \frac{f(x_{0} + iy) - f(x_{0} + iy_{0})}{x_{0} + iy - (x_{0} + iy_{0})} \\
+&= \lim_{y \rightarrow y_{0}} \frac{u(x_{0}, y) + iv(x_{0}, y) - u(x_{0}, y_{0}) - iv(x_{0}, y_{0})}{i(y - y_{0})} \\
+&= \frac{1}{i} \lim_{y \rightarrow y_{0}} \left( \frac{u(x_{0}, y) - u(x_{0}, y_{0})}{y - y_{0}} + i \frac{v(x_{0}, y) - v(x_{0}, y_{0})}{y - y_{0}} \right) \\
+&= \frac{1}{i} \left( \frac{\partial u}{\partial y} + i \frac{\partial v}{\partial y} \right) \\
+&= \frac{\partial v}{\partial y} - i \frac{\partial u}{\partial y} \quad \text{--- (2)}
+\end{align*}
+
+Since $(1) = (2)$, we have:
+$$ \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} \quad \text{and} \quad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y} $$
+
+Also from this proof, expressions for $f'(z_{0})$:
+$$ f' = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = \frac{\partial v}{\partial y} - i\frac{\partial u}{\partial y} $$
+
+\begin{example}[Examples: Cauchy-Riemann]
+\textbf{Ex 1.} $f(z) = z^{2} = (x+iy)^{2} = x^{2} - y^{2} + i(2xy)$
+$u(x,y) = x^{2} - y^{2}$, $v(x,y) = 2xy$.
+Is it holomorphic over $\mathbb{C}$? We check the Cauchy-Riemann eqns:
+\begin{align*}
+\frac{\partial u}{\partial x} &= 2x, \quad \frac{\partial v}{\partial x} = 2y \\
+\frac{\partial u}{\partial y} &= -2y, \quad \frac{\partial v}{\partial y} = 2x
+\end{align*}
+C-R satisfied! And $f'(z) = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = 2x + i(2y) = 2z$.
+
+\textbf{Ex 2.} The complex conjugate: $f(z) = \overline{z} = x - iy$.
+$u = x, v = -y$.
+\begin{align*}
+\frac{\partial u}{\partial x} &= 1, \quad \frac{\partial v}{\partial x} = 0 \\
+\frac{\partial u}{\partial y} &= 0, \quad \frac{\partial v}{\partial y} = -1
+\end{align*}
+Here $\partial_x u \neq \partial_y v$. Not holomorphic!
+Another way of seeing the same fact: If we try to compute the limit $\lim_{z \rightarrow z_{0}} \frac{\overline{z} - \overline{z_{0}}}{z - z_{0}}$:
+\begin{itemize}
+    \item For $z = x + iy_{0}$, $z_{0} = x_{0} + iy_{0}$: $\lim_{x \to x_{0}} \frac{x - x_{0}}{x - x_{0}} = 1$.
+    \item For $z = x_{0} + iy$, $z_{0} = x_{0} + iy_{0}$: $\lim_{y \to y_{0}} \frac{-iy + iy_{0}}{iy - iy_{0}} = -1$.
+\end{itemize}
+
+\textbf{Ex 3.} $f: \mathbb{C} \setminus \{0\} \to \mathbb{C}$, $f(z) = \frac{1}{z}$.
+We have: $f(x+iy) = \frac{\overline{z}}{|z|^{2}} = \frac{x}{x^{2}+y^{2}} - i\frac{y}{x^{2}+y^{2}}$.
+So:
+\begin{align*}
+\frac{\partial u}{\partial x} &= \frac{x^{2}+y^{2} - 2x^{2}}{(x^{2}+y^{2})^{2}} = \frac{y^2-x^2}{(x^2+y^2)^2} \\
+\frac{\partial v}{\partial x} &= \frac{2xy}{(x^{2}+y^{2})^{2}} \\
+\frac{\partial u}{\partial y} &= -\frac{2xy}{(x^{2}+y^{2})^{2}} \\
+\frac{\partial v}{\partial y} &= \frac{-(x^{2}+y^{2}) + 2y^{2}}{(x^{2}+y^{2})^{2}} = \frac{y^2-x^2}{(x^2+y^2)^2}
+\end{align*}
+So C-R eqns are satisfied.
+And $f' = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = \frac{y^{2}-x^{2}}{(x^{2}+y^{2})^{2}} + i\frac{2xy}{(x^{2}+y^{2})^{2}}$.
+This is $= -\frac{1}{z^{2}}$. Indeed: $-\frac{1}{z^{2}} = -\frac{\overline{z}^{2}}{|z|^{4}} = -\frac{(x-iy)^{2}}{(x^{2}+y^{2})^{2}} = \dots$
+
+\textbf{Ex 4.} $f(z) = e^{z} = e^{x+iy} = e^{x}\cos(y) + ie^{x}\sin(y)$.
+So:
+\begin{align*}
+\frac{\partial u}{\partial x} &= e^{x}\cos(y), \quad \frac{\partial v}{\partial x} = e^{x}\sin(y) \\
+\frac{\partial u}{\partial y} &= -e^{x}\sin(y), \quad \frac{\partial v}{\partial y} = e^{x}\cos(y)
+\end{align*}
+So C-R eqns are satisfied.
+And $f' = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = e^{x}\cos(y) + ie^{x}\sin(y) = e^{z}$.
+\end{example}
+
+\subsection{Rules of differentiation for complex derivatives}
+
+Let $f, g: W \rightarrow \mathbb{C}$ be holomorphic. Then:
+\begin{itemize}
+    \item $(f+g)' = f' + g'$
+    \item $(f \cdot g)' = f' \cdot g + f \cdot g'$
+    \item $\left(\frac{f}{g}\right)' = \frac{f' \cdot g - f \cdot g'}{g^{2}}$ (when $g \neq 0$)
+    \item If the image of $g$ is inside $W$: $(f \circ g)'(z) = f'(g(z)) \cdot g'(z)$.
+\end{itemize}
+
+These relations can be proved in exactly the same way as in the real case. E.g.
+\begin{align*}
+(f \cdot g)'(z_{0}) &= \lim_{z \to z_{0}} \frac{f(z) \cdot g(z) - f(z_{0})g(z_{0})}{z - z_{0}} \\
+&= \lim_{z \to z_{0}} \frac{f(z)g(z) - f(z_{0})g(z) + f(z_{0})g(z) - f(z_{0})g(z_{0})}{z - z_{0}} \\
+&= \lim_{z \to z_{0}} \left( \frac{f(z)-f(z_{0})}{z - z_{0}}g(z) + f(z_{0})\frac{g(z)-g(z_{0})}{z - z_{0}} \right) \\
+&= f'(z_{0})g(z_{0}) + f(z_{0})g'(z_{0})
+\end{align*}
+
+With these rules and the examples we computed earlier, it follows that the usual formulas for polynomials, trigonometric functions, etc. hold.
+E.g. $(z^{k})' = k \cdot z^{k-1}$ ($k \in \mathbb{Z}$), $(\cos(z))' = -\sin(z)$.
+
+\subsection{Aside: A geometric property of holomorphic functions}
+
+If $f: W \rightarrow \mathbb{C}$ is holomorphic, when viewed as a map $f: \mathbb{R}^{2} \rightarrow \mathbb{R}^{2}$, the Jacobian matrix
+$$ Df = \begin{pmatrix} \partial_{x}u & \partial_{y}u \\ \partial_{x}v & \partial_{y}v \end{pmatrix} $$
+tells us how $f$ acts on infinitesimal rectangles.
+By the Cauchy-Riemann equations, $Df$ takes the form of $\lambda \cdot \text{Rotation matrix}$.
+So an infinitesimal square is mapped to a square (no uneven stretching, preserving angles -- this is called a \textit{conformal mapping}).
+
+\subsection{The complex logarithm}
+
+\begin{definition}[Definition: Complex Logarithm]
+\textbf{Recall:} The principal argument of a complex number $z \neq 0$: $-\pi < \text{Arg}(z) \leq \pi$.
+It is continuous except on the negative real axis (where it jumps from $\pi$ to $-\pi$).
+
+How would we define the complex logarithm? We want $e^{\log(z)} = z$.
+If $\log(z) = a + ib$, then $z = e^{a+ib}$.
+$|z| \cdot e^{i\text{Arg}(z)} = e^{a} \cdot e^{ib}$.
+It makes sense to set $|z| = e^{a}$ and $\text{Arg}(z) = b$ (up to $2\pi k$).
+
+So: We define $\log(z) = \log|z| + i\text{Arg}(z)$.
+\begin{itemize}
+    \item $\log(z)$ is not defined for $z=0$.
+    \item $\log(z)$ is discontinuous on the negative real axis.
+    \item But: $\log(z)$ is continuous on $\mathbb{C} \setminus \{z \in \mathbb{C} : \text{Im}(z) = 0, \text{Re}(z) \leq 0\}$. This excluded line is the \textit{Branch cut}. (Had we defined $\text{Arg}(z)$ differently, we would have a different branch cut).
+\end{itemize}
+\end{definition}
+
+Real and imaginary parts: $\log(z) = \log|z| + i\text{Arg}(z)$.
+If $z = x+iy$: If $x > 0$,
+$$ \log(z) = \log\sqrt{x^{2}+y^{2}} + i\arctan\left(\frac{y}{x}\right) $$
+where $u(x,y) = \log\sqrt{x^2+y^2}$ and $v(x,y) = \arctan(y/x)$.
+
+Easy to verify: $\log(z)$ is holomorphic on $\mathbb{C} \setminus \{z : \text{Im}(z) = 0, \text{Re}(z) \leq 0\}$ with $(\log z)' = \frac{1}{z}$.
+
+\textit{Remark:} For positive real numbers, $\log(z_{1} \cdot z_{2}) = \log(z_{1}) + \log(z_{2})$.
+For general complex numbers (due to discontinuity), this is \textbf{no longer true}.
+If $z_{1} = z_{2} = -1$, $\log(z_{1}) = \log(z_{2}) = i\pi$, but $\log(z_{1} \cdot z_{2}) = \log(1) = 0$.
+But: It is true up to $2\pi i$.
+
+\subsection{Power function with complex exponent}
+
+Let $\gamma \in \mathbb{C}$. Define:
+$$ f(z) = z^{\gamma} = e^{\log(z^{\gamma})} = e^{\gamma \cdot \log(z)} $$
+$= e^{\gamma \cdot \log|z| + i\gamma \cdot \text{Arg}(z)}$.
+
+It is holomorphic over $\mathbb{C} \setminus \{z : \text{Im}(z) = 0, \text{Re}(z) \leq 0\}$ (as the composition of $e^{\gamma z}$ with $\log z$).
+When $\gamma \in \mathbb{Z}$: it is continuous (in fact, holomorphic) for all $z \neq 0$.

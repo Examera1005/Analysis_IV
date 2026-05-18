@@ -1,0 +1,284 @@
+% ==============================================================================
+% WEEK 8
+% ==============================================================================
+\section{Week 8 -- 13.04.26 - Review of Fourier Transform}
+
+Let $f: \mathbb{R} \to \mathbb{C}$ be a (piecewise) continuous function. 
+
+\begin{definition}[Definition: Fourier Transform]
+The Fourier transform of $f$ is defined as:
+\begin{equation}
+    \hat{f}(a) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} f(x) \,\mathrm{d}x
+\end{equation}
+Sometimes we also use the notation $\mathcal{F}[f](a)$ for $\hat{f}(a)$.
+\end{definition}
+
+In order for the integral to be well-defined, we need $\int_{-\infty}^{+\infty} |f(x)| \,\mathrm{d}x < \infty$ (i.e., $f \in L^1(\mathbb{R})$).
+
+\begin{definition}[Definition: Inverse Fourier Transform]
+The Inverse Fourier transform is defined as:
+\begin{equation}
+    \mathcal{F}^{-1}[\hat{f}](x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{+iax} \hat{f}(a) \,\mathrm{d}a
+\end{equation}
+It is the inverse of $\mathcal{F}$, meaning $\mathcal{F}^{-1}[\mathcal{F}[f]] = f$.
+\end{definition}
+
+\textbf{Note:} The Fourier transform maps $\{f: \mathbb{R} \to \mathbb{C}\}$ to $\{\hat{f}: \mathbb{R} \to \mathbb{C}\}$. In general, even if $f$ is real-valued, $\hat{f}$ might be $\mathbb{C}$-valued. (But, if $f$ is real-valued and \emph{even}, $\hat{f}$ is also real-valued and even).
+
+The transform bridges two domains:
+\begin{center}
+    \textbf{Physical Domain} (time-domain or space-domain) $f$ 
+    $\longleftrightarrow$ 
+    \textbf{Frequency Domain} $\hat{f}$
+\end{center}
+
+\subsection{Properties of the Fourier Transform}
+
+\begin{proposition}[Properties]
+\begin{enumerate}
+    \item \textbf{Linearity:} $\mathcal{F}[af + bg] = a\mathcal{F}[f] + b\mathcal{F}[g]$ for $a, b \in \mathbb{C}$.
+    
+    \item \textbf{Time Shift:} Let $g(x) = f(x - x_0)$. Then:
+    \begin{align*}
+        \hat{g}(a) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} g(x) \,\mathrm{d}x 
+        = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} f(x - x_0) \,\mathrm{d}x \\
+        &\stackrel{y = x - x_0}{=} \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-ia(y+x_0)} f(y) \,\mathrm{d}y \\
+        &= \frac{1}{\sqrt{2\pi}} e^{-iax_0} \int_{-\infty}^{+\infty} e^{-iay} f(y) \,\mathrm{d}y = e^{-iax_0} \hat{f}(a)
+    \end{align*}
+
+    \item \textbf{Frequency Shift:} Let $g(x) = e^{ia_0x} f(x)$. Then:
+    \begin{align*}
+        \hat{g}(a) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} g(x) \,\mathrm{d}x 
+        = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} \cdot e^{ia_0x} f(x) \,\mathrm{d}x \\
+        &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-i(a - a_0)x} f(x) \,\mathrm{d}x = \hat{f}(a - a_0)
+    \end{align*}
+    \textit{Note:} Property 3 is essentially like Property 2 but for the inverse Fourier transform. This is to be expected, since the inverse Fourier transform is defined with a similar expression as the Fourier transform (with $e^{+iax}$ in place of $e^{-iax}$).
+
+    \item \textbf{Re-scaling (or Dilation):} Let $g(x) = f(\lambda x)$ for some $\lambda \neq 0$. 
+    We want to substitute $y = \lambda x$. 
+    \begin{itemize}
+        \item If $\lambda > 0$, then $\mathrm{d}y = \lambda \,\mathrm{d}x \implies \mathrm{d}x = \mathrm{d}y / \lambda$.
+        \item If $\lambda < 0$, we get $\int_{+\infty}^{-\infty} \dots \frac{\mathrm{d}y}{\lambda} = \int_{-\infty}^{+\infty} \dots \frac{\mathrm{d}y}{|\lambda|}$.
+    \end{itemize}
+    In both cases:
+    \begin{align*}
+        \hat{g}(a) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-ia\frac{y}{\lambda}} \cdot f(y) \frac{\mathrm{d}y}{|\lambda|} \\
+        &= \frac{1}{|\lambda|} \cdot \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-i\frac{a}{\lambda}y} f(y) \,\mathrm{d}y 
+        = \frac{1}{|\lambda|} \hat{f}\left(\frac{a}{\lambda}\right)
+    \end{align*}
+    \textit{Remark:} When $f$ is very concentrated around a point, $\mathcal{F}[f]$ is very spread out. This is a manifestation of the \textbf{uncertainty principle}.
+    
+    \item \textbf{Derivatives and Fourier Transform:} Let $g(x) = f'(x)$. Then:
+    \begin{equation*}
+        \hat{g}(a) = ia\hat{f}(a)
+    \end{equation*}
+    More generally:
+    \begin{equation*}
+        \mathcal{F}[f^{(n)}](a) = (ia)^n \mathcal{F}[f](a)
+    \end{equation*}
+    So the Fourier transform maps differential equations with constant coefficients to algebraic equations on the frequency domain.
+\end{enumerate}
+\end{proposition}
+
+
+\subsection{Convolution}
+
+\begin{definition}[Definition: Convolution]
+Given $f, g: \mathbb{R} \to \mathbb{C}$, the convolution $f * g$ is defined by:
+\begin{equation}
+    (f * g)(x) = \int_{-\infty}^{+\infty} f(y) g(x - y) \,\mathrm{d}y
+\end{equation}
+\end{definition}
+
+\subsection{Important Properties of Convolution}
+\begin{enumerate}[label=\roman*)]
+    \item \textbf{Commutativity:} Using the change of variables $\bar{y} = x - y$, one can see that:
+    \begin{equation*}
+        \int_{-\infty}^{+\infty} f(y) g(x - y) \,\mathrm{d}y = \int_{-\infty}^{+\infty} f(x - \bar{y}) g(\bar{y}) \,\mathrm{d}\bar{y}
+    \end{equation*}
+    So $f * g = g * f$.
+    
+    \item \textbf{Associativity:} $f * (g * h) = (f * g) * h$.
+    
+    \item \textbf{Distributivity:} $f * (g + h) = f * g + f * h$.
+    
+    \item \textbf{Derivative:} $(f * g)' = f' * g = f * g'$. 
+    So $f * g$ is at least as smooth as the smoother among $f$ and $g$.
+\end{enumerate}
+
+One way to interpret $f * g$ is as the \textbf{``local average''} of $f$ with weights $g$.
+
+\textbf{Important Example:}
+
+If $g(x) = \begin{cases} \frac{1}{2\varepsilon}, & x \in [-\varepsilon, \varepsilon] \\ 0, & \text{else} \end{cases}$
+
+Then:
+\begin{equation*}
+    (f * g)(x) = \int_{-\infty}^{+\infty} f(y) g(x - y) \,\mathrm{d}y = \frac{1}{2\varepsilon} \int_{x-\varepsilon}^{x+\varepsilon} f(y) \,\mathrm{d}y
+\end{equation*}
+So it is really the local average of $f$. Note that, in this case, as $\varepsilon \to 0$, $(f * g)(x) \to f(x)$.
+
+The last point is true more generally: If $g_\lambda(x)$ is a family of functions with $\int_{-\infty}^{+\infty} g_\lambda(x) \,\mathrm{d}x = 1$ and $g_\lambda(x) = 0$ outside $[-\lambda, \lambda]$, then $f * g_\lambda(x) \to f(x)$ as $\lambda \to 0$. (In this case, as $\lambda \to 0$, $g_\lambda(x)$ looks like a Dirac $\delta$-function).
+
+\subsection{Fourier Transform and Convolutions}
+
+\begin{theorem}[Theorem: Convolution Theorem]
+Let $f, g: \mathbb{R} \to \mathbb{C}$. Then:
+\begin{equation*}
+    \mathcal{F}[f * g](a) = \sqrt{2\pi} \cdot \mathcal{F}[f](a) \cdot \mathcal{F}[g](a)
+\end{equation*}
+\end{theorem}
+\textbf{Conclusion:} $\mathcal{F}$ transforms convolutions into products (and the opposite as well, since $\mathcal{F}^{-1}$ has similar properties). In applications, we can often express $\mathcal{F}[f]$ as the product of known functions, in which case we recover $f$ as a convolution.
+
+\subsection{The Gaussian Function and Plancherel's Theorem}
+
+\begin{theorem}[Theorem: Gaussian Transform]
+For the Gaussian function $f(x) = e^{-x^2/2}$, we have:
+\begin{equation*}
+    \hat{f}(a) = e^{-a^2/2}
+\end{equation*}
+\end{theorem}
+
+(We will prove it in the exercises). So from Property 4 (Re-scaling), for $\lambda \neq 0$:
+If $f_\lambda(x) = e^{-\lambda^2 \frac{x^2}{2}} \implies \hat{f}_\lambda(a) = \frac{1}{|\lambda|} e^{-\frac{a^2}{2\lambda^2}}$.
+
+\begin{theorem}[Theorem: Plancherel's Theorem]
+\begin{equation*}
+    \int_{-\infty}^{+\infty} |f(x)|^2 \,\mathrm{d}x = \int_{-\infty}^{+\infty} |\hat{f}(a)|^2 \,\mathrm{d}a
+\end{equation*}
+(The signal and its Fourier transform have the same energy).
+\end{theorem}
+
+
+\subsection{Complex Analysis and the Fourier Transform}
+
+How does complex analysis enter the study of the Fourier transform? Let's see an example.
+
+Let $f(x) = \frac{1}{1 + x^2}$. Then:
+\begin{equation*}
+    \hat{f}(a) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-iax} \frac{1}{1 + x^2} \,\mathrm{d}x
+\end{equation*}
+We can evaluate this integral as an application of the residue theorem. 
+Let $a \le 0$ (similar analysis if $a > 0$). Let:
+\begin{equation*}
+    h(z) = \frac{e^{-iaz}}{1 + z^2} = \frac{e^{-iaz}}{(z - i)(z + i)}
+\end{equation*}
+
+We integrate over a semi-circle contour in the upper half-plane bounded by $[-R, R]$.
+Since $a \le 0$, on $\{z : |z| = R \cap \Im(z) > 0\}$, $h(z)$ decays to $0$ as $R \to \infty$. 
+
+From the examples we have already calculated in class (for $P(x)/Q(x) \cdot e^{iax}$):
+\begin{align*}
+    \int_{-\infty}^{+\infty} h(x) \,\mathrm{d}x &= 2\pi i \cdot \operatorname{Res}(h, i) \\
+    &= 2\pi i \cdot \lim_{z \to i} \left( (z - i)h(z) \right) \\
+    &= 2\pi i \frac{e^{-ia(i)}}{2i} = \pi e^a
+\end{align*}
+
+So, for $a \le 0$, $\pi e^a = \pi e^{-|a|}$. Thus:
+\begin{equation*}
+    \mathcal{F}\left[\frac{1}{1+x^2}\right](a) = \frac{1}{\sqrt{2\pi}} \cdot \pi e^{-|a|} = \sqrt{\frac{\pi}{2}} e^{-|a|}
+\end{equation*}
+
+For $a \ge 0$: The same computation (but with the semi-circle now in the lower half-plane) gives the same formula. (Or use that, since $f$ is real and even, the same must be true for $\hat{f}$).
+
+
+\subsection{The Laplace Transform}
+
+The Fourier transform is used for signals that are defined on the whole real line ($\mathbb{R}$). The Laplace transform is for signals defined on $t \ge 0$. Both transform differential equations into algebraic equations.
+
+Let $f: [0, +\infty) \to \mathbb{C}$ be a piecewise continuous function.
+
+\begin{definition}[Definition: Laplace Transform]
+The Laplace transform of $f$ is:
+\begin{equation}
+    \mathcal{L}[f](z) = \int_0^{+\infty} f(t) e^{-zt} \,\mathrm{d}t \quad (z: \text{complex})
+\end{equation}
+Sometimes, we use capital letters to denote the Laplace transform, for instance: $F(z) = \mathcal{L}[f](z)$, $G(z) = \mathcal{L}[g](z)$.
+\end{definition}
+
+\textbf{When is the integral well-defined (i.e., ``converges'')?}
+
+We need $\int_0^{+\infty} |f(t)| \cdot |e^{-zt}| \,\mathrm{d}t < +\infty$.
+
+Suppose that, for some $\gamma_0 \in \mathbb{R}$, we have:
+\begin{equation*}
+    \int_0^{+\infty} |f(t)| e^{-\gamma_0 t} \,\mathrm{d}t < +\infty
+\end{equation*}
+(Naively, this condition says that, as $t \to \infty$, $|f(t)| \lesssim e^{\gamma_0 t}$).
+Then, for $\Re(z) > \gamma_0$:
+\begin{align*}
+    |\mathcal{L}[f](z)| &\le \int_0^{+\infty} |f(t)| |e^{-zt}| \,\mathrm{d}t \\
+    &= \int_0^{+\infty} |f(t)| \cdot \left| e^{-\Re(z)t} \cdot e^{-i \Im(z)t} \right| \,\mathrm{d}t \\
+    &= \int_0^{+\infty} |f(t)| \cdot e^{-\Re(z)t} \,\mathrm{d}t < +\infty
+\end{align*}
+since $e^{-\Re(z)t} < e^{-\gamma_0 t}$ (in view of our assumption for $\gamma_0$). Therefore, if such a $\gamma_0$ exists, $\mathcal{L}[f](z)$ is defined at least over $U = \{z \in \mathbb{C} : \Re(z) > \gamma_0\}$.
+
+\begin{definition}[Definition: Abscissa of Convergence]
+A $\gamma_0$ such that $\int_0^{+\infty} |f(t)| e^{-\gamma t} \,\mathrm{d}t < +\infty$ for all $\gamma > \gamma_0$ is called an \textbf{abscissa of convergence} for $f$. In such a case, $\mathcal{L}[f](z)$ is well-defined for $\Re(z) > \gamma_0$.
+\end{definition}
+
+\textbf{Example:} If $f(t) = 0$ for $t > M$, then:
+\begin{equation*}
+    \int_0^{+\infty} |f(t)| e^{-\gamma_0 t} \,\mathrm{d}t = \int_0^M |f(t)| e^{-\gamma_0 t} \,\mathrm{d}t < \infty \quad \text{for all } \gamma_0 \in \mathbb{R}
+\end{equation*}
+So in that case, $\mathcal{L}[f](z)$ is defined for all $z \in \mathbb{C}$.
+
+\textit{Remark:} The ``faster'' the rate of growth for $f(t)$ (or the ``slower'' the rate of decay), the smaller the domain where $\mathcal{L}[f](z)$ is well-defined.
+
+If $\gamma_0$ is an abscissa of convergence and $U = \{z : \Re(z) > \gamma_0\}$, then $\mathcal{L}[f]$ is holomorphic on $U$. 
+Let $F(z) = \mathcal{L}[f](z)$. Then:
+\begin{align*}
+    \frac{\mathrm{d}}{\mathrm{d}z} F(z) &= \frac{\mathrm{d}}{\mathrm{d}z} \int_0^{+\infty} f(t) e^{-zt} \,\mathrm{d}t \\
+    &= \int_0^{+\infty} f(t) (-t) e^{-zt} \,\mathrm{d}t \\
+    &= -\mathcal{L}[t \cdot f(t)](z)
+\end{align*}
+
+
+\begin{theorem}[Theorem: Derivative of Laplace Transform]
+If $F(z) = \mathcal{L}[f](z)$, then:
+\begin{equation}
+    F'(z) = -\mathcal{L}[t \cdot f(t)](z)
+\end{equation}
+\end{theorem}
+
+We will also use the following lemma (proven in the exercises):
+\begin{theorem}[Theorem: Lemma]
+If $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f(t)]$, it is also an abscissa of convergence for $\mathcal{L}[t \cdot f(t)]$.
+\end{theorem}
+
+\subsection{Examples of Laplace Transforms}
+
+\textbf{Example 1:}
+
+Let $f: [0, +\infty) \to \mathbb{R}$ be $f(t) = 1$ (constant). Then, for any $\gamma > 0$:
+\begin{equation*}
+    \int_0^{+\infty} |f(t)| e^{-\gamma t} \,\mathrm{d}t = \int_0^{+\infty} e^{-\gamma t} \,\mathrm{d}t = \left[ \frac{e^{-\gamma t}}{-\gamma} \right]_{t=0}^{t=+\infty} = \frac{1}{\gamma} < \infty
+\end{equation*}
+So any $\gamma_0 \ge 0$ is an abscissa of convergence. $\mathcal{L}[f](z)$ is defined (and holomorphic) for $\Re(z) > 0$. And:
+\begin{align*}
+    \mathcal{L}[1](z) &= \int_0^{+\infty} 1 \cdot e^{-zt} \,\mathrm{d}t = \left[ \frac{e^{-zt}}{-z} \right]_{t=0}^{t=+\infty} \\
+    &= -\frac{1}{z} \left( \lim_{t \to +\infty} (e^{-zt}) - e^0 \right)
+\end{align*}
+But $\lim_{t \to +\infty} (e^{-zt}) = 0$ for $\Re(z) > 0$ since $|e^{-zt}| = e^{-\Re(z)t} \cdot |e^{-i\Im(z)t}| = e^{-\Re(z)t} \to 0$ as $t \to +\infty$. So:
+\begin{equation*}
+    \mathcal{L}[1](z) = \frac{1}{z}
+\end{equation*}
+
+\textbf{Example 2:}
+
+Let $f: [0, +\infty) \to \mathbb{R}$ be $f(t) = t$.
+Then $\frac{\mathrm{d}}{\mathrm{d}z} \mathcal{L}[1](z) = -\mathcal{L}[t](z)$, so:
+\begin{equation*}
+    \mathcal{L}[t](z) = -\frac{\mathrm{d}}{\mathrm{d}z} \left( \frac{1}{z} \right) = \frac{1}{z^2}
+\end{equation*}
+(Also holomorphic for $\Re(z) > 0$, since as we saw in the lemma, if $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f]$, the same is true for $\mathcal{L}[t \cdot f(t)]$, and any $\gamma_0 > 0$ is an abscissa of convergence for $\mathcal{L}[1]$).
+
+Repeating this construction yields the following general theorem:
+
+\begin{theorem}[Theorem: Laplace Transform of Monomials]
+For any $n \in \mathbb{N}$, 
+\begin{equation*}
+    \mathcal{L}[t^n](z) = \frac{n!}{z^{n+1}}
+\end{equation*}
+defined for $\Re(z) > 0$.
+\end{theorem}

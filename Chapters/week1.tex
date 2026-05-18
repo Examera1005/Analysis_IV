@@ -1,0 +1,174 @@
+% ==============================================================================
+% WEEK 1
+% ==============================================================================
+\section{Week 1 -- 16.02.26 - Introduction and Complex Numbers}
+
+\textbf{Overview of the course ( $\sim 13$ weeks):}
+\begin{itemize}
+    \item Complex analysis: Complex differentiation, Complex integration, Laurent series, Residue theorem.
+    \item Review of Fourier transform / series.
+    \item Laplace transform (well-suited for functions defined on the half-line $[0,+\infty)$).
+    \item Applications to ODEs / PDEs (Initial/boundary value problems).
+\end{itemize}
+
+\subsection{Review of complex numbers $\mathbb{C}$}
+
+\begin{definition}[Definition: Imaginary Unit \& Complex Numbers]
+\textbf{Imaginary unit:} $i$ \\
+\textbf{Def:} $i^{2} = -1$
+
+For $z = x + iy \in \mathbb{C}$ where $x,y \in \mathbb{R}$:
+\begin{itemize}
+    \item $x = \text{Re}(z)$ (Real part)
+    \item $y = \text{Im}(z)$ (Imaginary part)
+\end{itemize}
+\end{definition}
+
+\textbf{Geometric representation:} Identify with $\mathbb{R}^{2}$.
+\begin{itemize}
+    \item $z = x + iy \implies \overline{z} = x - iy$ (Complex conjugate. Reflection across the real axis).
+    \item $|z| = \sqrt{x^{2} + y^{2}}$ (Modulus / absolute value). Geometrically: $|z|$ is the distance of $(x,y)$ from $(0,0)$.
+    \item $|z_{1} - z_{0}|$ : Distance between $z_{0}$ and $z_{1}$.
+\end{itemize}
+
+\textit{E.g.}: $\{z \in \mathbb{C} : |z-1| < 1\}$ is the open disk centered at $z_{0} = 1$ of radius $1$.
+
+\textbf{Algebraic operations:} \\
+If $z_{1} = x_{1} + iy_{1}$ and $z_{2} = x_{2} + iy_{2}$:
+\begin{itemize}
+    \item $z_{1} + z_{2} = (x_{1} + x_{2}) + i(y_{1} + y_{2})$
+    \item $z_{1} - z_{2} = (x_{1} - x_{2}) + i(y_{1} - y_{2})$
+    \item $z_{1} \cdot z_{2} = (x_{1} + iy_{1}) \cdot (x_{2} + iy_{2}) = (x_{1}x_{2} - y_{1}y_{2}) + i(x_{1}y_{2} + x_{2}y_{1})$
+    \item $z \cdot \overline{z} = (x + iy)(x - iy) = x^{2} + y^{2} = |z|^{2}$
+    \item $\displaystyle \frac{z_{1}}{z_{2}} = \frac{z_{1} \cdot \overline{z_{2}}}{z_{2} \cdot \overline{z_{2}}} = \frac{z_{1} \cdot \overline{z_{2}}}{|z_{2}|^{2}}$ \quad (if $z_{2} \neq 0$)
+\end{itemize}
+
+\textbf{Complex exponential:} \\
+If $z = x + iy$, we define $e^{z} = e^{x+iy} = e^{x} \cdot e^{iy}$, where for $y \in \mathbb{R}$, $e^{iy}$ is defined by:
+
+\begin{theorem}[Theorem: Euler's formula]
+For $\theta \in \mathbb{R}$, $e^{i\theta} = \cos(\theta) + i\sin(\theta)$.
+Since $|e^{i\theta}| = \sqrt{\cos^2\theta + \sin^2\theta} = 1 \implies e^{i\theta}$ lies on the unit circle $S_{1}$.
+Also, $\overline{e^{i\theta}} = \cos(\theta) - i\sin(\theta) = e^{-i\theta}$.
+\end{theorem}
+
+\textit{Remark:} An equivalent definition of $e^{z}$ for $z \in \mathbb{C}$ is by assuming that $e^{z}$ has the same power series expansion as in the case $\mathbb{R}$, i.e.:
+$$e^{z} = \sum_{k=0}^{+\infty} \frac{z^{k}}{k!}$$
+Then one can "derive" Euler's formula.
+
+\textbf{Polar expression:} \\
+For $z = x + iy \neq 0$, we can always write $z = |z| \cdot e^{i\theta}$, $\theta \in \mathbb{R}$.
+\begin{itemize}
+    \item The argument $\theta$ is unique up to $2\pi\mathbb{Z}$.
+    \item \textbf{Principal argument:} The argument with $-\pi < \theta \leq \pi$.
+\end{itemize}
+
+If $z_{1} = |z_{1}| \cdot e^{i\theta_{1}}$ and $z_{2} = |z_{2}| \cdot e^{i\theta_{2}}$ for some $\theta_{1}, \theta_{2} \in \mathbb{R}$, then $z_{1} = z_{2} \iff |z_{1}| = |z_{2}|$ and $\theta_{1} - \theta_{2} \in 2\pi\mathbb{Z}$.
+
+Operations in polar form:
+\begin{itemize}
+    \item $z_{1} \cdot z_{2} = |z_{1}| \cdot |z_{2}| \cdot e^{i(\theta_{1} + \theta_{2})}$
+    \item $\displaystyle \frac{z_{1}}{z_{2}} = \frac{|z_{1}| \cdot e^{i\theta_{1}}}{|z_{2}| \cdot e^{i\theta_{2}}} = \frac{|z_{1}|}{|z_{2}|} \cdot e^{i(\theta_{1} - \theta_{2})}$
+    \item In particular: If $z = |z|e^{i\theta}$, then $z^{k} = |z|^{k} \cdot e^{ik\theta}$ for $k \in \mathbb{Z}$.
+\end{itemize}
+
+\textit{Remark:} Multiplication by $e^{i\alpha}$ is equivalent to a rotation by $\alpha$.
+
+\textbf{How to find principal argument:} \\
+For $z = x + iy$:
+\begin{itemize}
+    \item If $x = 0$: $\theta = \frac{\pi}{2}$ if $y > 0$, and $\theta = -\frac{\pi}{2}$ if $y < 0$.
+    \item If $x > 0$: $\tan(\theta) = \frac{y}{x} \implies \theta = \arctan\left(\frac{y}{x}\right)$.
+\end{itemize}
+
+\textit{Ex:} If $z = 1 + i$, then $\text{Arg}(z) = \arctan\left(\frac{1}{1}\right) = \frac{\pi}{4} \implies z = \sqrt{2} \cdot e^{i\frac{\pi}{4}}$ (polar expression).
+
+\begin{example}[Example: Solving algebraic equations]
+Sometimes, the polar expression is useful in solving algebraic equations. \\
+\textit{E.g.:} Solve $z^{5} = 2$. \\
+\textit{Sol:} Let $z = |z| \cdot e^{i\theta}$ where $\theta$ is the principal argument.
+Then: $z^{5} = |z|^{5} \cdot e^{i5\theta} = 2$.
+$$ \implies \begin{cases} |z|^{5} = 2 \\ 5\theta \in 2\pi\mathbb{Z} \end{cases} \implies \begin{cases} |z| = 2^{1/5} \\ \theta \in \frac{2\pi}{5}\mathbb{Z} \end{cases} $$
+But $\theta$ is the principal argument: $-\pi < \theta \leq \pi$.
+$$\theta \in \left\{ -\frac{4\pi}{5}, -\frac{2\pi}{5}, 0, \frac{2\pi}{5}, \frac{4\pi}{5} \right\}$$
+5 solutions. (In general: a $k$-th order equation has $k$ solutions, counted with multiplicity).
+\end{example}
+
+\subsection{Complex functions}
+
+We will consider functions $f: \mathbb{C} \rightarrow \mathbb{C}$,
+$$ z \mapsto f(z) = f(x + iy) = u(x,y) + iv(x,y) $$
+where $u, v: \mathbb{R}^{2} \rightarrow \mathbb{R}$ are the Real part and Imaginary part, respectively.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item $f(z) = z = x + iy$
+    \item $f(z) = \overline{z} = x - iy$
+    \item $f(z) = z^{2} = (x+iy)^{2} = x^{2} - y^{2} + 2xyi$
+    \item $f(z) = \frac{1}{z} = \frac{\overline{z}}{|z|^{2}} = \frac{x - yi}{x^{2} + y^{2}} = \frac{x}{x^{2} + y^{2}} - i\frac{y}{x^{2} + y^{2}}$ \quad (Defined on $\mathbb{C}^{*} = \mathbb{C} \setminus \{0\}$)
+    \item $f(z) = e^{z} = e^{x+iy} = e^{x} \cdot e^{iy} = e^{x}\cos(y) + ie^{x}\sin(y)$
+\end{itemize}
+
+\textbf{Trigonometric and hyperbolic trigonometric functions:}
+\begin{itemize}
+    \item $\cos(z) = \frac{e^{iz} + e^{-iz}}{2}$
+    \item $\sin(z) = \frac{e^{iz} - e^{-iz}}{2i}$
+    \item $\cosh(z) = \frac{e^{z} + e^{-z}}{2}$
+    \item $\sinh(z) = \frac{e^{z} - e^{-z}}{2}$
+\end{itemize}
+
+Calculating the real and imaginary parts of $\cos(z)$:
+\begin{align*}
+\cos(z) &= \frac{e^{iz} + e^{-iz}}{2} = \frac{e^{i(x+iy)} + e^{-i(x+iy)}}{2} \\
+&= \frac{1}{2}\left(e^{-y+ix} + e^{y-ix}\right) \\
+&= \frac{1}{2}\left(e^{-y}(\cos x + i\sin x) + e^{y}(\cos(-x) + i\sin(-x))\right) \\
+&= \frac{1}{2}\left(e^{-y} + e^{y}\right)\cos x + i\frac{1}{2}\left(e^{-y} - e^{y}\right)\sin x \\
+&= \cosh(y)\cos(x) - i\sinh(y)\sin(x)
+\end{align*}
+This agrees with the usual definition when $z \in \mathbb{R}$ (i.e., $y = 0 \implies \cosh(0)\cos(x) = \cos(x)$).
+
+\subsection{Limits and continuity}
+
+\begin{definition}[Definition: Continuity]
+We will say that $f: \mathbb{C} \rightarrow \mathbb{C}$ is continuous at a point $z_{0} \in \mathbb{C}$ if for all $\epsilon > 0$, there exists $\delta > 0$ such that for all $z$ with $|z - z_{0}| < \delta$ we have $|f(z) - f(z_{0})| < \epsilon$.
+
+Equivalently,
+$$ \lim_{z \rightarrow z_{0}} f(z) = f(z_{0}) $$
+\end{definition}
+
+\textbf{Remarks:}
+1) Let $f(z) = f(x+iy) = u(x,y) + iv(x,y)$.
+Then: $f$ is continuous at $z_{0} = x_{0} + iy_{0} \iff u$ \& $v$ are continuous at $(x_{0}, y_{0})$ (as functions from $\mathbb{R}^{2}$ to $\mathbb{R}$).
+In particular: If $z_{0} = x_{0} + iy_{0}$,
+$$ \lim_{z \rightarrow z_{0}} f(z) = \lim_{(x,y) \rightarrow (x_{0}, y_{0})} u(x,y) + i \lim_{(x,y) \rightarrow (x_{0}, y_{0})} v(x,y) $$
+
+2) If $f, g$ are continuous, then the same is true for $f \pm g$, $f \cdot g$, $f/g$ (where $g \neq 0$), etc.
+
+\subsection{Complex derivative}
+
+\begin{definition}[Definition: Complex Derivative]
+We say that a function $f: \mathbb{C} \rightarrow \mathbb{C}$ is (complex) differentiable at $z_0$ if the limit
+$$ \lim_{z \rightarrow z_{0}} \frac{f(z) - f(z_{0})}{z - z_{0}} $$
+exists and is finite. We will denote the limit by $f'(z_{0})$.
+
+\begin{itemize}
+    \item If $f$ is differentiable at every point of an open set $W \subseteq \mathbb{C}$, $f$ is \textbf{holomorphic} over $W$.
+    \item If $f$ is holomorphic over $\mathbb{C}$, $f$ is \textbf{entire}.
+\end{itemize}
+\end{definition}
+
+\textit{Remark:} The same rules for derivatives of products, compositions, etc. apply as in the real case.
+
+\textbf{Recall:} $W \subseteq \mathbb{C}$ is open if $\forall z_{0} \in W$, $\exists \epsilon > 0$ such that the disc $D_{z_{0}, \epsilon} = \{z \in \mathbb{C} : |z - z_{0}| < \epsilon\}$ is contained inside $W$.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item $\mathbb{C}$ is open.
+    \item $\mathbb{C}^{*} = \mathbb{C} \setminus \{0\}$ is open, since for $z_{0} \in \mathbb{C}^{*}$ the disk of radius $\epsilon = \frac{|z_{0}|}{2}$ does not contain $0$, so it lies inside $\mathbb{C}^{*}$.
+    \item $\{z \in \mathbb{C} : \text{Re}(z) \geq 0\}$ is not open, since for $z_{0}$ on the boundary ($\text{Re}(z_{0}) = 0$), any open disc contains points with $\text{Re}(z) < 0$, i.e., outside the set.
+\end{itemize}
+
+\begin{itemize}
+    \item If $f(z) = z$, $\forall z_{0} \in \mathbb{C}$, $\lim_{z \to z_{0}} \frac{z - z_{0}}{z - z_{0}} = 1$. So $f$ is entire.
+    \item If $f(z) = \frac{1}{z}$, $f'(z) = -\frac{1}{z^{2}}$. So $f$ is holomorphic on $\mathbb{C}^{*}$.
+\end{itemize}

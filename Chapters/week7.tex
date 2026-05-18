@@ -1,0 +1,150 @@
+% ==============================================================================
+% WEEK 7
+% ==============================================================================
+\section{Week 7 -- 30.03.26 - Applications of the Residue Theorem}
+
+We can use the residue theorem to compute certain integrals over the real line. A classic example is $\int_{-\infty}^{+\infty} \frac{1}{1+x^2} \, dx$. This method works for functions $f(z)$ that, as $|z| \to +\infty$, decay faster than $\frac{1}{|z|}$.
+
+\subsection{Integrals Over the Real Line}
+Let $R(x) = \frac{P(x)}{Q(x)}$, where $P(x)$ and $Q(x)$ are real polynomials such that:
+\begin{enumerate}
+    \item $\deg Q \ge \deg P + 2$
+    \item $R(x)$ is defined on all of $\mathbb{R}$ (i.e., $Q(x) \neq 0$ for all $x \in \mathbb{R}$).
+\end{enumerate}
+
+\noindent \textbf{Remarks:}
+\begin{itemize}
+    \item The condition $Q(x) \neq 0$ on $\mathbb{R}$ implies that $\deg Q$ is even, since an odd-degree real polynomial always has at least one real root.
+    \item $Q(x) = a_k x^k + a_{k-1} x^{k-1} + \dots + a_0$ has real coefficients. Thus, if $Q(z) = 0$ for some $z \in \mathbb{C}$, then taking the complex conjugate yields $Q(\bar{z}) = 0$. The roots of $Q$ in $\mathbb{C}$ come in complex conjugate pairs.
+\end{itemize}
+
+For any $a \ge 0$, we are interested in computing integrals of the form:
+\begin{equation*}
+\int_{-\infty}^{+\infty} R(x)\cos(ax) \, dx \quad \text{and} \quad \int_{-\infty}^{+\infty} R(x)\sin(ax) \, dx
+\end{equation*}
+Since $e^{iax} = \cos(ax) + i\sin(ax)$, we can compute them simultaneously by evaluating:
+\begin{equation}
+I = \int_{-\infty}^{+\infty} R(x)e^{iax} \, dx
+\end{equation}
+
+\textbf{Applications:}
+\begin{itemize}
+    \item \textbf{Fourier transform (Signal Analysis):} $\hat{f}(a) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) e^{-iat} \, dt$
+    \item Study of resonances in harmonic systems with friction.
+\end{itemize}
+
+\subsection{Evaluation Contour}
+Consider the function $f(z) = R(z)e^{iaz}$. If $z_1, \bar{z_1}, \dots, z_k, \bar{z_k}$ are the zeroes of $Q(z)$, then $f : \mathbb{C} \setminus \{z_1, \dots, z_k\} \to \mathbb{C}$ is holomorphic.
+
+Let $r > 0$ be large enough so that all zeroes $z_1, \dots, z_k$ in the upper half-plane are contained in the semi-disc $B_r(0) \cap \{\text{Im}(z) > 0\}$. We define the curves:
+\begin{itemize}
+    \item $L_r = \{z : \text{Im}(z) = 0, -r \le \text{Re}(z) \le r\}$ parameterized by $\gamma_1(t) = t, \ t \in [-r, r]$.
+    \item $C_r = \{z : z = r e^{i\theta}, \ \theta \in [0, \pi]\}$ (half-circle in the upper half-plane).
+\end{itemize}
+Let $\Gamma_r = L_r \cup C_r$ be the simple closed contour. Then:
+\begin{equation}
+\int_{\Gamma_r} f(z) \, dz = \int_{-r}^{r} R(x)e^{iax} \, dx + \int_{C_r} f(z) \, dz
+\end{equation}
+
+As $r \to +\infty$:
+\begin{enumerate}
+    \item $\int_{\Gamma_r} f(z) \, dz = 2\pi i \sum_{\text{Im}(z_j)>0} \text{Res}_{z_j}(f)$ (by the Residue Theorem).
+    \item $\int_{-r}^{r} R(x)e^{iax} \, dx \to I$.
+    \item $\int_{C_r} f(z) \, dz \to 0$.
+\end{enumerate}
+
+\begin{proofbox}[Proof that $\int_{C_r} f(z) dz \to 0$]
+For $\text{Im}(z) \ge 0$ and $a \ge 0$, we have $|e^{iaz}| \le 1$. Splitting $z = x + iy$:
+\begin{equation*}
+|e^{iaz}| = |e^{ia(x+iy)}| = |e^{iax} e^{-ay}| = e^{-ay} \le 1
+\end{equation*}
+This is the reason we close the loop in the upper half-plane. Furthermore, since $\deg Q \ge \deg P + 2$, we have for large $r$:
+\begin{equation*}
+\left| \frac{P(re^{i\theta})}{Q(re^{i\theta})} \right| \le \frac{C}{r^{\deg Q - \deg P}} \le \frac{C}{r^2}
+\end{equation*}
+Therefore:
+\begin{align*}
+\left| \int_{C_r} f(z) \, dz \right| &\le \int_0^\pi \left| f(re^{i\theta}) \right| \cdot \left| i r e^{i\theta} \right| \, d\theta \\
+&\le \int_0^\pi \frac{C}{r^2} \cdot 1 \cdot r \, d\theta = \frac{C\pi}{r} \xrightarrow{r \to +\infty} 0
+\end{align*}
+\end{proofbox}
+
+\noindent \textbf{Conclusion for Real Integrals:}
+\begin{equation}
+\int_{-\infty}^{+\infty} R(x)e^{iax} \, dx = 2\pi i \sum_{\text{Im}(z_j)>0} \text{Res}_{z_j} \left( R(z)e^{iaz} \right) \quad \text{for } a \ge 0
+\end{equation}
+\textit{Note: If $a < 0$, set $\tilde{x} = -x$ and compute similarly.}
+
+\subsection{Example 1}
+Compute $A = \int_{-\infty}^{+\infty} \frac{x^2}{16+x^4} \cos(x) \, dx$.
+
+Here $R(x) = \frac{x^2}{16+x^4}$ and $a = 1$. $A = \text{Re} \left( \int_{-\infty}^{+\infty} \frac{x^2}{16+x^4} e^{ix} \, dx \right)$. \\
+Roots of $Q(z) = 16+z^4 = 0 \implies z^4 = 16e^{i\pi}$. The roots are $z_k = 2e^{i(\pi/4 + k\pi/2)}$ for $k=0, 1, 2, 3$.
+\begin{itemize}
+    \item $z_1 = \sqrt{2} + i\sqrt{2}$ (upper half-plane)
+    \item $z_2 = -\sqrt{2} + i\sqrt{2}$ (upper half-plane)
+\end{itemize}
+Let $f(z) = \frac{z^2}{16+z^4} e^{iz}$. The residues at simple poles $z_1, z_2$ can be calculated via $P(z_0)/Q'(z_0)$ or factoring.
+\begin{align*}
+\text{Res}_{z_1}(f) &= \lim_{z \to z_1} (z-z_1) f(z) = \frac{z_1^2 e^{iz_1}}{4z_1^3} = \frac{e^{iz_1}}{4z_1} \\
+\text{Res}_{z_2}(f) &= \lim_{z \to z_2} (z-z_2) f(z) = \frac{z_2^2 e^{iz_2}}{4z_2^3} = \frac{e^{iz_2}}{4z_2}
+\end{align*}
+Applying the Residue Theorem and extracting the real part yields:
+\begin{equation}
+A = \text{Re} \left( 2\pi i (\text{Res}_{z_1}(f) + \text{Res}_{z_2}(f)) \right) = \frac{\pi\sqrt{2}}{4} e^{-\sqrt{2}} (\cos\sqrt{2} - \sin\sqrt{2})
+\end{equation}
+
+\subsection{Integrals of Rational Trigonometric Functions}
+
+Suppose $P(x, y)$ and $Q(x, y)$ are polynomials, such that $Q(x, y) \neq 0$ on the unit circle (i.e., for $x^2 + y^2 = 1$). We want to compute:
+\begin{equation}
+\int_0^{2\pi} \frac{P(\cos t, \sin t)}{Q(\cos t, \sin t)} \, dt
+\end{equation}
+
+We transform this into a complex contour integral over the unit circle $|z|=1$, utilizing the parameterization $z = e^{it}$. Thus, $dz = i e^{it} \, dt \implies dt = \frac{dz}{iz}$.
+\begin{equation*}
+\cos t = \frac{e^{it} + e^{-it}}{2} = \frac{z + z^{-1}}{2}, \quad \sin t = \frac{e^{it} - e^{-it}}{2i} = \frac{z - z^{-1}}{2i}
+\end{equation*}
+
+The integral becomes $\int_{|z|=1} f(z) \, dz$ where:
+\begin{equation}
+f(z) = \frac{1}{iz} \cdot \frac{P \left( \frac{z+z^{-1}}{2}, \frac{z-z^{-1}}{2i} \right)}{Q \left( \frac{z+z^{-1}}{2}, \frac{z-z^{-1}}{2i} \right)}
+\end{equation}
+Since $P$ and $Q$ are polynomials, $f$ is a \textbf{meromorphic function} (holomorphic except for isolated poles). By the Residue Theorem:
+\begin{equation}
+\int_0^{2\pi} \frac{P(\cos t, \sin t)}{Q(\cos t, \sin t)} \, dt = 2\pi i \sum_{|z_k|<1} \text{Res}_{z_k}(f)
+\end{equation}
+
+\subsubsection{Example 2}
+Compute $\int_0^{2\pi} \frac{1}{2+\cos\theta} \, d\theta$. \\
+Here $P(x,y)=1$ and $Q(x,y) = 2+x$. Substituting $\cos\theta = \frac{z+z^{-1}}{2}$ and $d\theta = \frac{dz}{iz}$:
+\begin{equation*}
+f(z) = \frac{1}{iz} \cdot \frac{1}{2 + \frac{z+1/z}{2}} = \frac{1}{iz} \cdot \frac{2z}{z^2 + 4z + 1} \cdot \frac{1}{i} = \frac{2}{i(z^2 + 4z + 1)}
+\end{equation*}
+Singular points (roots of $z^2+4z+1=0$):
+\begin{equation*}
+z_{1} = -2+\sqrt{3}, \quad z_2 = -2-\sqrt{3}
+\end{equation*}
+Only $z_1 \approx -0.268$ lies inside the unit circle $|z|=1$. $f(z)$ has a simple pole at $z_1$.
+\begin{align*}
+\text{Res}_{z_1}(f) &= \lim_{z \to z_1} (z-z_1) f(z) = \frac{2}{i(z_1 - z_2)} = \frac{2}{i(-2+\sqrt{3} - (-2-\sqrt{3}))} = \frac{2}{i(2\sqrt{3})} = \frac{1}{i\sqrt{3}}
+\end{align*}
+Evaluating the integral:
+\begin{equation}
+\int_0^{2\pi} \frac{1}{2+\cos\theta} \, d\theta = 2\pi i \left( \text{Res}_{z_1}(f) \right) = 2\pi i \left( \frac{1}{i\sqrt{3}} \right) = \frac{2\pi}{\sqrt{3}}
+\end{equation}
+\textit{(Sanity check: the original integrand is purely real and positive, so the final integral yields a positive real number).}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=white, colframe=black, title=Summary Table: Contour Integration Strategies]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Integral Type} & \textbf{Domain} & \textbf{Substitution / Contour} & \textbf{Relevant Singularities} \\
+\midrule
+Rational Functions over $\mathbb{R}$ & $\mathbb{R} \to \pm\infty$ & Semicircle in upper half-plane & Poles where $\text{Im}(z) > 0$ \\
+Rational Trigonometric & $[0, 2\pi]$ & $z = e^{i\theta}$, Unit circle $|z|=1$ & Poles where $|z| < 1$ \\
+\bottomrule
+\end{tabular}
+\end{tcolorbox}

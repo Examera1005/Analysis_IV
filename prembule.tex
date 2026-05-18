@@ -1,0 +1,63 @@
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+\usepackage[english, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{english}
+\babelprovide[import, onchar=ids fonts]{french}
+
+% Set default/Latin font to Sans Serif in the main (rm) slot
+\babelfont{rm}{Noto Sans}
+\babelfont[english]{rm}{Noto Sans}
+
+% --- MATHEMATICS & FORMATTING PACKAGES ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
+% --- COLORED BOXES SETUP ---
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins, theorems}
+
+% Unified base style for all boxes
+\tcbset{
+    unifiedstyle/.style={enhanced, fonttitle=\bfseries, boxsep=2mm, arc=2mm}
+}
+
+% Semantic Box Environments
+\newtcolorbox{definition}[1][Definition]{unifiedstyle, colback=blue!5!white, colframe=blue!75!black, title={#1}}
+\newtcolorbox{theorem}[1][Theorem]{unifiedstyle, colback=green!5!white, colframe=green!60!black, title={#1}}
+\newtcolorbox{proposition}[1][Proposition]{unifiedstyle, colback=green!5!white, colframe=green!60!black, title={#1}}
+\newtcolorbox{formula}[1][Formula]{unifiedstyle, colback=green!5!white, colframe=green!60!black, title={#1}}
+\newtcolorbox{example}[1][Example]{unifiedstyle, colback=orange!5!white, colframe=orange!80!black, title={#1}}
+\newtcolorbox{remark}[1][Remark]{unifiedstyle, colback=purple!5!white, colframe=purple!70!black, title={#1}}
+\newtcolorbox{recall}[1][Recall]{unifiedstyle, colback=yellow!10!white, colframe=yellow!60!black, title={#1}}
+\newtcolorbox{proofbox}[1][Proof]{unifiedstyle, colback=gray!5!white, colframe=gray!50!black, fonttitle=\bfseries\itshape, title={#1}}
+\newtcolorbox{verification}[1][Verification \& Mathematical Rigor]{unifiedstyle, colback=gray!5!white, colframe=gray!60!black, coltitle=black, borderline west={3pt}{0pt}{gray!60!black}, title={#1}}
+
+% --- CUSTOM MATH COMMANDS ---
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\curl}{\operatorname{curl}}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\interior}{int}
+% Command for Laplace transform
+\newcommand{\Lap}{\mathcal{L}}
+\newcommand{\dd}{\mathrm{d}}
+
+% --- GLOBAL SPACING & LISTS ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\setlist[itemize]{label=\textbullet}
+
+% --- TITLE INFORMATION ---
+\title{\textbf{Analysis IV (for EL, GM, MX)}\\ \Huge Based on Georgios Moschidis's Lectures}
+\author{Thélio Geiser}
+\date{Spring 2026}

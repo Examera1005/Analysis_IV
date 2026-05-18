@@ -1,0 +1,201 @@
+% ==============================================================================
+% WEEK 4
+% ==============================================================================
+\section{Week 4 -- 09.03.26 - Cauchy's Integral formula}
+
+\subsection{Recall from last time}
+
+\begin{theorem}[Theorem: Cauchy's Theorem]
+If $U \subseteq \mathbb{C}$ is an open and simply connected set, $f: U \rightarrow \mathbb{C}$ is a holomorphic function, and $\Gamma$ is a piecewise regular, closed curve inside $U$, then:
+\begin{equation}
+\int_{\Gamma} f(z) \, dz = 0
+\end{equation}
+\end{theorem}
+
+\textbf{In practice:} Given $f$ and $\Gamma$, if $f$ is holomorphic in a set slightly larger than the interior of $\Gamma$, we can apply the theorem.
+
+\begin{verification}[Verification - Cauchy's Theorem]
+\textbf{Status:} Formally exact.\\
+\textbf{Proof/Context:} This is the Cauchy-Goursat integral theorem, a fundamental result in complex analysis. Edouard Goursat proved in 1900 that the assumption of continuity for the derivative $f'$ was not necessary; mere complex differentiability (holomorphy) is sufficient to guarantee that the integral over a closed loop in a simply connected domain is zero.
+\end{verification}
+
+The theorem above allows us to shift and modify the path of integration when convenient. For instance:
+
+\begin{itemize}
+    \item If $\Gamma_0$ and $\Gamma_1$ are two simple closed curves with the same orientation, where $\Gamma_1$ is in the interior of $\Gamma_0$, and $f$ is holomorphic in the region contained between them (i.e., in $\text{int}(\Gamma_0) \setminus \text{int}(\Gamma_1)$), then:
+    \begin{equation}
+    \int_{\Gamma_0} f(z) \, dz = \int_{\Gamma_1} f(z) \, dz
+    \end{equation}
+    \item If two paths $\Gamma_1$ and $\Gamma_2$ have the same endpoints, are oriented in the same direction, and $f$ is holomorphic in the region bounded between $\Gamma_1$ and $\Gamma_2$, then:
+    \begin{equation}
+    \int_{\Gamma_1} f(z) \, dz = \int_{\Gamma_2} f(z) \, dz
+    \end{equation}
+    *(This is proven by applying Cauchy's theorem to the closed loop formed by $\Gamma_1$ and $-\Gamma_2$).*
+\end{itemize}
+
+\subsection{Cauchy's Integral Formulas}
+
+\begin{formula}[Formula: Cauchy's Integral Formula (Classic)]
+Let $D \subseteq \mathbb{C}$ be an open set, $f: D \rightarrow \mathbb{C}$ be holomorphic, and $z_0 \in D$. Let $\gamma$ be any simple closed curve such that $\text{int}(\gamma) \subseteq D$ and $z_0 \in \text{int}(\gamma)$ (oriented counter-clockwise). \\
+Then:
+\begin{equation}
+f(z_0) = \frac{1}{2\pi i} \int_{\gamma} \frac{f(z)}{z - z_0} \, dz
+\end{equation}
+\end{formula}
+
+\begin{formula}[Formula: Extended Cauchy's Integral Formula (Derivatives)]
+Under the same assumptions as above, the value of the $n$-th derivative of $f$ at $z_0$ is given by:
+\begin{equation}
+f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_{\gamma} \frac{f(z)}{(z - z_0)^{n+1}} \, dz
+\end{equation}
+*(Note: For $n = 0$, we recover the previous classic formula).*
+\end{formula}
+
+\textbf{Idea of the proof:} Start from the classic Cauchy's integral formula and differentiate with respect to $z_0$. On the right-hand side, the variable $z_0$ appears only in the term $\frac{1}{z - z_0}$. We therefore use the differentiation rule:
+$$\frac{d}{dz_0} \left( (z - z_0)^{-k} \right) = k \cdot (z - z_0)^{-k-1}$$
+
+\begin{verification}[Fundamental Remark]
+The extended Cauchy formula is used to derive a spectacular statement made earlier in class: \textbf{Holomorphic functions are infinitely many times differentiable.} Indeed, the mere existence of the first derivative implies the existence of all higher-order derivatives in complex analysis—a behavior profoundly different from real analysis.
+\end{verification}
+
+\subsubsection{Application Examples}
+
+\begin{example}[Example 1]
+Let $f(z) = \frac{\cos z}{z}$. Let $\gamma$ be a simple closed curve, oriented counter-clockwise. What is $\int_{\gamma} f(z) \, dz$?
+
+We have to consider several cases, because $f$ is holomorphic on $\mathbb{C} \setminus \{0\}$.
+\begin{itemize}
+    \item If $0 \in \gamma$ (the point $0$ lies on the curve), the integral is ill-defined.
+    \item If $0$ is \textbf{not} in the interior of $\gamma$, then by Cauchy's theorem: $\int_{\gamma} f(z) \, dz = 0$.
+    \item If $0$ \textbf{is} in the interior of $\gamma$:
+    Note that $\int_{\gamma} f(z) \, dz = \int_{\gamma} \frac{g(z)}{z - 0} \, dz$, where $g(z) = \cos z$, which is holomorphic on $\mathbb{C}$. By Cauchy's integral formula, $g(0) = \frac{1}{2\pi i} \int_{\gamma} \frac{g(z)}{z} \, dz$. \\
+    Thus, $\int_{\gamma} f(z) \, dz = 2\pi i \cdot g(0) = 2\pi i \cdot \cos(0) = \mathbf{2\pi i}$.
+\end{itemize}
+\end{example}
+
+\begin{example}[Example 2]
+Let $\gamma$ be the circle defined by $\{ z : |z - 2| = 1 \}$ oriented counter-clockwise. Let us compute:
+$$\int_{\gamma} \frac{e^z}{(z - 2)^2} \, dz$$
+Using the extended Cauchy's integral formula with $n=1$, $z_0=2$, and $f(z) = e^z$ (which is holomorphic on $\mathbb{C}$):
+$$\int_{\gamma} \frac{e^z}{(z - 2)^{1+1}} \, dz = \frac{2\pi i}{1!} f^{(1)}(2)$$
+Since the derivative of $e^z$ is $e^z$, $f^{(1)}(2) = e^2$. The final result is therefore $\mathbf{2\pi i e^2}$.
+\end{example}
+
+\subsection{Taylor and Laurent Series (Chapter 11)}
+
+\subsubsection{Taylor Series Recall (Real Analysis)}
+
+Let $f: \mathbb{R} \rightarrow \mathbb{R}$ be a sufficiently regular function. For any $x_0 \in \mathbb{R}$, the Taylor polynomial of degree $N$ is defined by:
+$$P_N(x) = \sum_{n=0}^{N} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n$$
+
+\begin{theorem}[Theorem: Taylor's Theorem (Lagrange Remainder)]
+If $f \in C^{N+1}(\mathbb{R})$, then for all $x_0, x \in \mathbb{R}$, there exists $\theta \in (0, 1)$ such that:
+$$f(x) = P_N(x) + \frac{f^{(N+1)}(x_0 + \theta(x - x_0))}{(N+1)!} (x - x_0)^{N+1}$$
+\end{theorem}
+
+In practice, $\theta$ is unknown, but we can usually bound (estimate) this $(N+1)$-th derivative to prove that the remainder tends to $0$. This allows us to approximate functions using Taylor polynomials.
+
+If $f$ has derivatives of all orders at $x_0$, we may consider the Taylor series:
+$$\sum_{n=0}^{+\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n$$
+\textbf{Question:} Does the Taylor series converge? If yes, to what?
+
+\begin{example}[Example: Classic Example 1 (Real)]
+For $f(x) = e^x$ and $x_0 = 0$. The Taylor series is $\sum_{n=0}^{+\infty} \frac{x^n}{n!}$. It converges to $e^x$ for all $x \in \mathbb{R}$.
+\end{example}
+
+\begin{example}[Example: Classic Example 2 (Real)]
+For $f(x) = \frac{1}{1 - x}$ and $x_0 = 0$. Since $f^{(n)}(x) = n!(1-x)^{-n-1}$, we have $f^{(n)}(0) = n!$. The Taylor series is:
+$$\sum_{n=0}^{+\infty} \frac{f^{(n)}(0)}{n!} x^n = \sum_{n=0}^{+\infty} x^n$$
+This is a geometric series that converges to $f(x)$ \textbf{only if} $|x| < 1$. \\
+(Recall: $(1 + x + ... + x^N)(1 - x) = 1 - x^{N+1} \implies \sum_{n=0}^N x^n = \frac{1 - x^{N+1}}{1 - x} \xrightarrow{N \to \infty} \frac{1}{1 - x}$ if $|x| < 1$).
+\end{example}
+
+\begin{verification}[Analytic vs $C^\infty$ Functions]
+Functions $f$ for which the Taylor series converges to $f$ in a neighborhood of $x_0$ are called \textbf{analytic}.
+It is crucial to note that \textit{not all $C^\infty$ functions are analytic}.
+\textbf{Classic counterexample by Augustin-Louis Cauchy (1822):}
+$$f(x) = \begin{cases} e^{-\frac{1}{x^2}}, & \text{if } x \neq 0 \\ 0, & \text{if } x = 0 \end{cases}$$
+All derivatives at $x=0$ are exactly $0$. The Taylor series is therefore formally $0 + 0x + 0x^2 + \dots = 0$. However, $f(x) \neq 0$ for all $x \neq 0$. The series converges, but not to the function!
+\end{verification}
+
+\subsubsection{Taylor Series for Complex Functions}
+
+\begin{theorem}[Theorem: Complex Taylor Series]
+Let $D \subseteq \mathbb{C}$ be an open set and $z_0 \in D$. Let $R > 0$ be such that the open disk $B_R(z_0) := \{z : |z - z_0| < R\}$ is contained in $D$. \\
+If $f: D \rightarrow \mathbb{C}$ is holomorphic, then for all $z \in B_R(z_0)$:
+\begin{equation}
+f(z) = \sum_{n=0}^{+\infty} \frac{f^{(n)}(z_0)}{n!} (z - z_0)^n
+\end{equation}
+The largest $R > 0$ satisfying this condition is called the \textbf{radius of convergence}.
+\end{theorem}
+
+\textbf{Important Remarks:}
+\begin{enumerate}
+    \item Holomorphic functions are therefore \textbf{all analytic} (around every $z_0$ in their domain, there exists a disk on which the Taylor series converges to $f$).
+    \item \textbf{In practice:} The radius $R$ corresponds exactly to the distance between $z_0$ and the "nearest" point where the function is not holomorphic (a singularity).
+    \item The coefficients of the Taylor series are directly linked to Cauchy's integral formula:
+    $$C_n = \frac{f^{(n)}(z_0)}{n!} = \frac{1}{2\pi i} \int_{\gamma} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}} \, d\zeta$$
+    for any simple closed curve $\gamma$ around $z_0$, oriented counter-clockwise, within $D$.
+\end{enumerate}
+
+\begin{example}[Example 1 (Complex Taylor)]
+\textbf{Entire function: $f(z) = e^z$.} \\
+$f$ is entire (holomorphic on all of $\mathbb{C}$). The theorem applies for any $R > 0$ (the radius of convergence is infinite). The series is: $e^z = \sum_{n=0}^{+\infty} \frac{z^n}{n!}$.
+\end{example}
+
+\begin{example}[Example 2 (Complex Taylor)]
+\textbf{Simple singularity: $f(z) = \frac{1}{1 - z}$ centered at $z_0 = 0$.} \\
+The domain is $D = \mathbb{C} \setminus \{1\}$. The largest possible radius to avoid the singularity at $z=1$ is $R = 1$. In this disk $B_1(0)$, we have: $\frac{1}{1 - z} = \sum_{n=0}^{+\infty} z^n$. \\
+*(From now on, this series will be considered known and used without re-proving it for $|z|<1$).*
+\end{example}
+
+\begin{example}[Example 3 (Complex Taylor)]
+\textbf{Complex singularities: $f(z) = \frac{1}{1 + z^2}$ centered at $z_0 = 0$.} \\
+The roots of the denominator are $i$ and $-i$. The domain is therefore $D = \mathbb{C} \setminus \{i, -i\}$. The largest possible radius from $0$ is the distance to $\pm i$, which is $R = 1$. \\
+Instead of computing all derivatives, we use an algebraic substitution: let $w = -z^2$. We know that for $|w| < 1$, $\frac{1}{1 - w} = \sum_{n=0}^{\infty} w^n$. We substitute to obtain:
+$$f(z) = \frac{1}{1 - (-z^2)} = \sum_{n=0}^{+\infty} (-z^2)^n = \sum_{n=0}^{+\infty} (-1)^n z^{2n}$$
+\end{example}
+
+\begin{verification}[Verification: Uniqueness of Series Expansion]
+If you can express $f(z)$ in the form of a power series $\sum_{n=0}^{+\infty} C_n (z - z_0)^n$ on a disk of convergence, \textbf{this series must coincide with the Taylor series of $f$}. The representation is unique. This is why using algebraic tricks (like in Example 3) is a perfectly valid method and is often preferable to computing successive derivatives $\frac{f^{(n)}(z_0)}{n!}$.
+\end{verification}
+
+\subsubsection{Laurent Series}
+
+To go further than Taylor series (which only model holomorphic functions without singularities at $z_0$), we introduce negative powers to handle isolated singularities (such as a pole).
+
+\begin{theorem}[Theorem: Laurent Series]
+Let $D \subseteq \mathbb{C}$ be open and $z_0 \in D$. Suppose that $f : D \setminus \{z_0\} \rightarrow \mathbb{C}$ is holomorphic. Let $R > 0$ be such that $B_R(z_0) \subseteq D$. \\
+Then for all $z \in B_R(z_0) \setminus \{z_0\}$ (the punctured disk):
+\begin{equation}
+f(z) = \sum_{n=-\infty}^{+\infty} C_n (z - z_0)^n
+\end{equation}
+where the coefficients $C_n$ are given by:
+\begin{equation}
+C_n = \frac{1}{2\pi i} \int_{\gamma} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}} \, d\zeta \quad (\forall n \in \mathbb{Z})
+\end{equation}
+\end{theorem}
+
+\textbf{Anatomy of a Laurent Series:}
+$$f(z) = \underbrace{\dots + \frac{C_{-2}}{(z - z_0)^2} + \frac{C_{-1}}{z - z_0}}_{\text{Singular Part (or Principal Part)}} + \underbrace{C_0 + C_1(z - z_0) + \dots}_{\text{Regular Part (Taylor Series)}}$$
+
+\begin{itemize}
+    \item \textbf{Singular part}: Contains the terms with negative exponents. This part characterizes the behavior of the function near the singularity.
+    \item \textbf{Regular part}: Behaves like a Taylor series. If the singular part is zero, the function can be analytically extended at $z_0$, and the Laurent series is simply the Taylor series.
+    \item As with Taylor, there is \textbf{uniqueness} of representation. Any algebraic method yielding a series of the above form allows us to formally identify the $C_n coefficients$.
+\end{itemize}
+
+\begin{example}[Example 1: Regular Holomorphic Function]
+If $f$ is holomorphic at $z_0$, the Laurent series coincides with the Taylor series. The singular part vanishes because for $n \le -1$, the term $(n+1) \le 0$, the integrand $\frac{f(z)}{(z - z_0)^{n+1}}$ is holomorphic, and Cauchy's integral evaluates to zero. \\
+Example: $f(z) = e^z = \sum_{n=0}^{+\infty} \frac{z^n}{n!}$.
+\end{example}
+
+\begin{example}[Example 2: Laurent Series Centered at $z_0 = 0$]
+For the following functions defined on $\mathbb{C} \setminus \{0\}$:
+\begin{itemize}
+    \item $f(z) = \frac{1}{z}$: Is already in the form of a Laurent series. $C_{-1} = 1$, and all other $C_n = 0$.
+    \item $f(z) = \frac{2}{z^2}$: Already in the form of a Laurent series. $C_{-2} = 2$, and all other $C_n = 0$.
+    \item $f(z) = \frac{5z + 1}{z^2} = \frac{1}{z^2} + \frac{5}{z}$: The Laurent series is explicit:
+    $$C_n = \begin{cases} 1, & \text{if } n = -2 \\ 5, & \text{if } n = -1 \\ 0, & \text{otherwise} \end{cases}$$
+\end{itemize}
+\end{example}

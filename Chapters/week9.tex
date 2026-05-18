@@ -1,0 +1,255 @@
+% ==============================================================================
+% WEEK 9
+% ==============================================================================
+\section{Week 9 -- 20.04.26 - Laplace Transform and Convolution}
+
+\begin{recall}[Recall from last time:]
+    \textbf{Laplace transform:} If $f: [0, +\infty) \longrightarrow \C$ is piecewise continuous, then
+    \[
+        \mathcal{L}[f](z) = \int_{0}^{+\infty} f(t) \cdot e^{-tz} dt
+    \]
+    whenever the integral converges.
+\end{recall}
+
+\begin{remark}[Note: Morally speaking]
+    The integral converges if as $t \to +\infty$, $|f(t)| \le C e^{\Re(z)t}$ at a rate which is "integrable".
+\end{remark}
+\subsection{Abscissa of Convergence}
+\begin{definition}[Definition: Abscissa of convergence]
+    $\gamma_0 \in \R$ is called an \textbf{abscissa of convergence} for $\mathcal{L}[f]$ if, for any $\gamma > \gamma_0$, we have
+    \[
+        \int_{0}^{+\infty} |f(t)| \cdot e^{-\gamma t} dt < +\infty.
+    \]
+\end{definition}
+
+So if $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f]$, then $\mathcal{L}[f](z)$ is holomorphic in the half-plane 
+\[
+    U = \{z \in \C : \Re(z) > \gamma_0\}.
+\]
+
+\begin{itemize}
+    \item \textbf{Sufficient condition:} If $\int_{0}^{+\infty} |f(t)| e^{-\gamma_0 t} dt < +\infty$, then $\gamma_0$ is an abscissa of convergence (since the same integral for $\gamma > \gamma_0$ then necessarily is bounded).
+    \item \textbf{Lemma from the exercises last week:} If $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f]$, then it is also an abscissa of convergence for $\mathcal{L}[t^n f(t)]$, $n \in \mathbb{N}$.
+    \item \textbf{We also proved last week:}
+    \begin{equation}
+        \frac{d}{dz}\mathcal{L}[f](z) = -\mathcal{L}[t \cdot f(t)](z) \tag{*}
+    \end{equation}
+    \item We also showed that, if $f(t) = 1$ (constant), then $0$ is an abscissa of convergence for $\mathcal{L}[1]$ (since, for any $\gamma > 0$, $\int_{0}^{+\infty} 1 \cdot e^{-\gamma t} dt < +\infty$) and
+    \[
+        \mathcal{L}[1](z) = \frac{1}{z}
+    \]
+    (Since $0$ is an abscissa of convergence, the above relation holds for $\Re(z) > 0$).
+    \item Using (*) and differentiating the above relation, we have for any $z$ with $\Re(z) > 0$ and any $n \in \mathbb{N}$:
+    \[
+        \mathcal{L}[t^n](z) = \left(-\frac{d}{dz}\right)^n \left(\frac{1}{z}\right) = \frac{n!}{z^{n+1}}
+    \]
+\end{itemize}
+
+\subsection{More properties of the Laplace transform:}
+
+\begin{theorem}[Theorem: Linearity]
+    Let $f, g: [0, +\infty) \longrightarrow \C$ be such that $\mathcal{L}[f]$ and $\mathcal{L}[g]$ are defined for $\Re(z) > \gamma_0$. Then, for any constants $a, b \in \C$,
+    \[
+        \mathcal{L}[af + bg](z) = a\mathcal{L}[f](z) + b\mathcal{L}[g](z)
+    \]
+    is defined for $\Re(z) > \gamma_0$.
+\end{theorem}
+
+\begin{theorem}[Theorem: Derivative Property]
+    Let $f: [0, +\infty) \longrightarrow \C$ be of class $C^1$ (that is to say, $f'$ is continuous). Assume that $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f]$ and $\mathcal{L}[f']$. Then, for $\Re(z) > \gamma_0$:
+    \[
+        \mathcal{L}[f'](z) = z \cdot \mathcal{L}[f](z) - f(0)
+    \]
+\end{theorem}
+
+\begin{remark}[Remark]
+    Similarly as in the case of the Fourier transform, the Laplace transform transforms derivatives into multiplication with $z$ (so differential equations are transformed to algebraic equations). A crucial difference is that the Laplace transform of $f'$ also picks up the "initial value" $f(0)$.
+\end{remark}
+
+\begin{proofbox}[Proof of the derivative theorem:]
+    \[
+        \mathcal{L}[f'](z) = \int_{0}^{+\infty} f'(t) \cdot e^{-tz} dt
+    \]
+    We would like to integrate by parts. We will do this carefully, in order to deal with the boundary term at $t = +\infty$ appropriately.
+    
+    Since $\Re(z) > \gamma_0$ and $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f']$, $\int_{0}^{+\infty} f'(t)e^{-tz}dt$ converges absolutely. So, for any sequence $T_n \xrightarrow{n \to +\infty} +\infty$ (which we will define precisely later), we have:
+    \begin{align*}
+        \mathcal{L}[f'](z) &= \int_{0}^{+\infty} f'(t)e^{-tz}dt \\
+        &= \lim_{n \to +\infty} \int_{0}^{T_n} f'(t)e^{-tz}dt \\
+        \intertext{Integration by parts:}
+        &= \lim_{n \to +\infty} \left( \left[ f(t) \cdot e^{-tz} \right]_{t=0}^{t=T_n} - \int_{0}^{T_n} f(t) \cdot (-z)e^{-tz}dt \right) \\
+        &= \lim_{n \to +\infty} \left( f(T_n)e^{-T_n z} - f(0) \cdot e^0 \right) + z \cdot \int_{0}^{+\infty} f(t)e^{-tz}dt \\
+        &= \lim_{n \to +\infty} f(T_n) \cdot e^{-T_n z} - f(0) + z \cdot \mathcal{L}[f](z)
+    \end{align*}
+    
+    We will now show that we can choose the sequence $T_n$ so that $\lim_{n \to +\infty} f(T_n) \cdot e^{-T_n z} = 0$ (this will give the formula that we want). 
+    
+    Recall that $\gamma_0$ is an abscissa of convergence for $\mathcal{L}[f]$ and $\Re(z) > \gamma_0$, so that
+    \[
+        \int_{0}^{+\infty} |f(t)| \cdot |e^{-z \cdot t}| dt = \int_{0}^{+\infty} |f(t)| \cdot e^{-\Re(z)t} dt < +\infty.
+    \]
+    Therefore, there must exist a sequence $T_n \to +\infty$ such that 
+    \[
+        |f(T_n)| \cdot |e^{-z \cdot T_n}| \xrightarrow{n \to +\infty} 0
+    \]
+    (otherwise, the function $|f(t)| \cdot |e^{-zt}|$ must stay bounded away from $0$ as $t \to +\infty$, which would contradict the bound $\int_{0}^{+\infty} |f(t)| \cdot |e^{-zt}| dt < +\infty$).
+    
+    For this sequence $T_n$: $\lim_{n \to +\infty} f(T_n) \cdot e^{-z T_n} = 0$.
+\end{proofbox}
+
+\begin{verification}[Verification: Limit Inferior and the Existence of Sequence $T_n$]
+    The text states: \textit{"otherwise, the function must stay bounded away from $0$ as $t \to +\infty$, which would contradict the bound."}
+    
+    From a strict analytical standpoint, a function $h(t) \ge 0$ being integrable on $[0, \infty)$ \textbf{does not} universally imply $\lim_{t \to \infty} h(t) = 0$. It is entirely possible to construct an integrable function with arbitrarily high "spikes" that do not converge to zero. 
+    
+    However, the integrability $\int_0^\infty h(t) dt < \infty$ \textbf{does} strictly guarantee that the \textit{limit inferior} goes to zero:
+    \[ \liminf_{t \to \infty} h(t) = 0 \]
+    If $\liminf_{t \to \infty} h(t) = c > 0$, then there exists some $T$ such that for all $t > T$, $h(t) > c/2$. This would imply $\int_T^\infty h(t)dt > \int_T^\infty (c/2) dt = \infty$, a contradiction. Because the limit inferior is $0$, by definition, there must exist \textit{some} monotonically increasing sequence $(T_n)_{n \in \mathbb{N}}$ such that $T_n \to \infty$ and $h(T_n) \to 0$. This rigorously validates the integration by parts boundary step without falsely assuming the global limit converges to zero.
+\end{verification}
+
+More generally, iterating the above formula: if $f \in C^n([0, +\infty), \C)$ (this notation means that $f: [0, +\infty) \to \C$ is $n$-times differentiable and $f, f', \dots, f^{(n)}$ are continuous), we have:
+
+\begin{align*}
+    \mathcal{L}[f'](z) &= z \cdot \mathcal{L}[f](z) - f(0) \\
+    \mathcal{L}[f''](z) &= z \cdot \mathcal{L}[f'](z) - f'(0) \\
+    &= z^2 \cdot \mathcal{L}[f](z) - z \cdot f(0) - f'(0) \\
+    &\vdots \\
+    \mathcal{L}[f^{(n)}](z) &= z^n \cdot \mathcal{L}[f](z) - z^{n-1} \cdot f(0) - \dots - z \cdot f^{(n-2)}(0) - f^{(n-1)}(0) \tag{**} \\
+    &= z^n \cdot \mathcal{L}[f](z) - \sum_{j=0}^{n-1} z^{n-1-j} f^{(j)}(0).
+\end{align*}
+\subsection{Examples}
+\begin{example}[Example]
+    Consider $f(t) = t^2$, $f'(t) = 2t$, $f''(t) = 2$. Their Laplace transforms are defined for $\Re(z) > 0$ (we already calculated them, but we can rederive the formulas using (**)):
+    
+    \begin{align*}
+        f(t) = t^2 &\implies \mathcal{L}[f](z) = \frac{2}{z^3} \\
+        f'(t) = 2t &\implies \mathcal{L}[f'](z) = \frac{2}{z^2} \\
+        f''(t) = 2 &\implies \mathcal{L}[f''](z) = \frac{2}{z}
+    \end{align*}
+    
+    Verifying with the formula:
+    \[
+        \mathcal{L}[f''](z) = z^2 \cdot \mathcal{L}[f](z) - z \cdot f(0) - f'(0) = z^2 \left(\frac{2}{z^3}\right) - z(0) - 0 = \frac{2}{z}
+    \]
+\end{example}
+\subsection{Laplace transform Properties}
+\begin{theorem}[Theorem: Integral Property]
+    Let $f: [0, +\infty) \to \C$ be piecewise continuous and $\gamma_0 \ge 0$ an abscissa of convergence for $\mathcal{L}[f]$.
+    
+    If $g(t) = \int_{0}^{t} f(s) ds \implies \mathcal{L}[g](z) = \frac{1}{z} \cdot \mathcal{L}[f](z)$ for $\Re(z) > \gamma_0$.
+\end{theorem}
+
+\begin{remark}[Remark]
+    In general, the abscissa of convergence for $\mathcal{L}[g]$ cannot be negative (even if it is for $f$).
+\end{remark}
+
+\begin{proofbox}[Sketch of proof:]
+    If $g(t) = \int_{0}^{t} f(s) ds$, then $f(t) = g'(t)$ and $g(0) = 0$.
+    
+    So:
+    \begin{align*}
+        \mathcal{L}[g'](z) &= z \cdot \mathcal{L}[g](z) - g(0) \\
+        &= z \cdot \mathcal{L}[g](z)
+    \end{align*}
+    Thus, $\mathcal{L}[g](z) = \frac{1}{z} \cdot \mathcal{L}[g'](z) = \frac{1}{z} \cdot \mathcal{L}[f](z)$.
+    
+    (We will not show why $\mathcal{L}[g](z)$ is indeed defined for $\Re(z) > \gamma_0$ when $\gamma_0 \ge 0$).
+\end{proofbox}
+\subsubsection{Time Scaling and Shifting}
+\begin{theorem}[Theorem: Time Scaling and Shifting]
+    Let $a > 0$ and $b \in \R$. Let $f: [0, +\infty) \to \C$ be piecewise continuous with abscissa of convergence $\gamma_0 \in \R$. Let
+    \[
+        g(t) = e^{-bt} \cdot f(at)
+    \]
+    Then
+    \[
+        \mathcal{L}[g](z) = \frac{1}{a}\mathcal{L}[f]\left(\frac{z+b}{a}\right)
+    \]
+    for any $z$ with $\Re\left(\frac{z+b}{a}\right) > \gamma_0 \iff \Re(z) > a\gamma_0 - b$ (and, in particular, $a\gamma_0 - b$ is an abscissa of convergence for $\mathcal{L}[g]$).
+\end{theorem}
+
+\begin{proofbox}[Sketch of the proof:]
+    We will not show that $a\gamma_0 - b$ is an abscissa of convergence (Exercise!), but we will compute the formula for $\mathcal{L}[g]$:
+    \begin{align*}
+        \mathcal{L}[g](z) &= \int_{0}^{+\infty} e^{-bt}f(at)e^{-tz} dt \\
+        &= \int_{0}^{+\infty} f(at) \cdot e^{-(z+b)t} dt \\
+        \intertext{Substitute $s = at \implies dt = \frac{ds}{a}$:}
+        &= \int_{0}^{+\infty} f(s) \cdot e^{-(z+b) \cdot \frac{s}{a}} \cdot \frac{ds}{a} \\
+        &= \frac{1}{a} \cdot \int_{0}^{+\infty} f(s) \cdot e^{-\left(\frac{z+b}{a}\right)s} ds \\
+        &= \frac{1}{a}\mathcal{L}[f]\left(\frac{z+b}{a}\right).
+    \end{align*}
+\end{proofbox}
+
+\begin{remark}[Remark]
+    Compare the above formula with the formula for the Fourier transform of the rescaling $f(t) \to f(\lambda \cdot t)$.
+\end{remark}
+
+\begin{example}[Example]
+    $g(t) = e^{ct} = e^{ct} \cdot 1$. Here $a = 1$, $b = -c$. According to the theorem:
+    \[
+        \mathcal{L}[g](z) = \mathcal{L}[1](z - c) = \frac{1}{z - c}
+    \]
+    for $\Re(z) > c$.
+\end{example}
+
+\begin{remark}[Remark]
+    In this case, we can compute that $\gamma_0 = c$ is an abscissa of convergence for $\mathcal{L}[e^{ct}]$ without using the theorem:
+    
+    For any $\gamma > c$, we have:
+    \begin{align*}
+        \int_{0}^{+\infty} |e^{ct}| \cdot |e^{-\gamma t}| dt &= \int_{0}^{+\infty} e^{ct} \cdot e^{-\gamma t} dt \\
+        &= \int_{0}^{+\infty} e^{-(-c+\gamma)t} dt \\
+        &= \left[ \frac{e^{-(\gamma-c)t}}{-(\gamma-c)} \right]_{t=0}^{t=+\infty} = \frac{1}{\gamma-c} < +\infty
+    \end{align*}
+    Since $\gamma > c \iff \gamma - c > 0$.
+\end{remark}
+
+\begin{example}[Example]
+    Find $f: [0, +\infty) \to \C$ such that
+    \[
+        \mathcal{L}[f](z) = \frac{1}{(z-a)(z-b)}, \quad a, b \in \R, \quad (a \neq b).
+    \]
+    Notice by partial fraction decomposition: 
+    \begin{align*}
+        \mathcal{L}[f](z) &= \frac{1}{(z-a)(z-b)} \\
+        &= \frac{1}{b-a} \left( \frac{1}{z-b} - \frac{1}{z-a} \right) \\
+        &= \frac{1}{b-a} \cdot \left( \mathcal{L}[e^{bt}](z) - \mathcal{L}[e^{at}](z) \right) \\
+        &= \frac{1}{b-a} \cdot \mathcal{L}[e^{bt} - e^{at}](z) \\
+        &= \mathcal{L}\left[ \frac{e^{bt} - e^{at}}{b-a} \right](z)
+    \end{align*}
+    Defined for $\Re(z) > \max\{a, b\}$.
+\end{example}
+
+\subsection{Convolutions}
+
+Let $f, g: [0, +\infty) \to \C$ be piecewise continuous functions. We extend $f, g$ on all of $\R$ by assuming they are $= 0$ on $(-\infty, 0)$.
+\[
+    (f * g)(t) = \int_{-\infty}^{+\infty} f(t-s)g(s) ds
+\]
+
+Since $g(s) = 0$ for $s < 0$, and $f(t-s) = 0$ for $t-s < 0 \implies s > t$, we have:
+\[
+    (f * g)(t) = 
+    \begin{cases}
+        \int_{0}^{t} f(t-s)g(s) ds & \text{if } t > 0 \\
+        0 & \text{if } t \le 0
+    \end{cases}
+\]
+
+So, $f * g$ can be restricted back on $[0, +\infty)$ (its values on $(-\infty, 0)$ are trivially zero). In this way, $f * g$ is well-defined as an operation for functions on $[0, +\infty)$.
+
+\begin{theorem}[Theorem: Convolution Theorem for Laplace]
+    Let $f, g: [0, +\infty) \to \C$ be piecewise continuous functions with $\gamma_0 \in \R$ an abscissa of convergence for $\mathcal{L}[f]$ and $\mathcal{L}[g]$.
+    
+    Then
+    \[
+        \mathcal{L}[f * g] = \mathcal{L}[f] \cdot \mathcal{L}[g]
+    \]
+    has abscissa of convergence $\gamma_0$.
+\end{theorem}
+
+\begin{verification}[Nuance regarding the Convolution Abscissa]
+    While the theorem states $\mathcal{L}[f * g]$ has an abscissa of convergence $\gamma_0$, strict analytical treatment dictates that the abscissa of convergence for the convolution is bounded above by the maximum of the individual abscissas. That is, if $\gamma_f$ and $\gamma_g$ are the abscissas of absolute convergence for $\mathcal{L}[f]$ and $\mathcal{L}[g]$, then $\mathcal{L}[f * g]$ converges absolutely for $\Re(z) > \max(\gamma_f, \gamma_g)$. 
+    
+    In our case, since $\gamma_f \le \gamma_0$ and $\gamma_g \le \gamma_0$, the convolution converges for $\Re(z) > \gamma_0$. However, due to possible cancellations in the convolution integral, the true strict abscissa of convergence for $f * g$ could actually be \textit{strictly less} than $\max(\gamma_f, \gamma_g)$. The formulation in the notes operates safely on the assertion that $\gamma_0$ remains a \textit{valid} upper bound for the abscissa for the operation.
+\end{verification}

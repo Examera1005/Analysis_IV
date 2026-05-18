@@ -1,0 +1,258 @@
+% ==============================================================================
+% WEEK 5
+% ==============================================================================
+\section{Week 5 -- 16.03.26}
+
+\subsection{Fundamental Integral Formulas and Series Expansions}
+
+\subsubsection{Review and Cauchy's Extended Formula}
+
+\begin{recall}[Recall from the previous weeks:]
+    As a consequence of Cauchy's theorem:
+
+    If $\gamma_0, \gamma_1$ are simple, closed curves oriented in the same direction, such that $\gamma_1$ is inside $\gamma_0$ and $f$ is holomorphic between $\gamma_0$ and $\gamma_1$:
+    \[
+        \int_{\gamma_0} f(z) \, dz = \int_{\gamma_1} f(z) \, dz
+    \]
+    (\textit{In practice: I can move the loop of integration, as long as I don't ``cross'' any singularity of $f$}).
+\end{recall}
+
+\begin{theorem}[Theorem: Cauchy's Integral Formula (Extended)]
+    If $\Gamma$ is a simple, closed, counter-clockwise oriented curve and $f$ is holomorphic in the interior of $\Gamma$, then for any $z_0$ in the interior of $\Gamma$:
+    \[
+        f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_{\Gamma} \frac{f(z)}{(z-z_0)^{n+1}} \, dz
+    \]
+\end{theorem}
+
+\subsubsection{Taylor and Laurent Series Expansions}
+
+\begin{theorem}[Theorem: Taylor Series]
+    If $D \subseteq \mathbb{C}$ is open, $z_0 \in D$ and $f$ is holomorphic in $D$: 
+    
+    $\forall R > 0$ such that the disk $B_R(z_0)$ lies entirely in $D$, we have:
+    \[
+        f(z) = \sum_{n=0}^{+\infty} \frac{f^{(n)}(z_0)}{n!} (z-z_0)^n
+    \]
+    for any $z$ in the disk $B_R(z_0)$.
+\end{theorem}
+
+The largest such $R$ is called the \textbf{``Radius of convergence''} or \textbf{``Radius of analyticity''}. 
+
+\textit{In practice:} $R$ is the distance from $z_0$ to the nearest ``singular'' point.
+
+Unlike in the real case, for holomorphic functions we can also write down a series expansion even when $f$ is not defined at $z_0$ (i.e., $z_0 \notin D$!).
+
+\begin{theorem}[Theorem: Laurent Series]
+    With $D$ as before, if $f: D \setminus \{z_0\} \longrightarrow \mathbb{C}$ is holomorphic, then for any $R > 0$ such that $B_R(z_0) \subseteq D$, the following equality holds for $z \in B_R(z_0) \setminus \{z_0\}$:
+    \[
+        f(z) = \sum_{n=-\infty}^{+\infty} c_n \cdot (z-z_0)^n
+    \]
+    where the constant $c_n$ can be computed by the formula:
+    \[
+        c_n = \frac{1}{2\pi i} \int_{\gamma} \frac{f(\zeta)}{(\zeta-z_0)^{n+1}} \, d\zeta
+    \]
+    where $\gamma$ is any simple, closed, counter-clockwise curve around $z_0$ such that $\operatorname{int}(\gamma) \setminus \{z_0\} \subseteq D$.
+\end{theorem}
+
+\noindent\textbf{Remark.} When $f$ (originally defined on $D \setminus \{z_0\}$) is actually extendible on $z_0$ as a holomorphic function there, then $c_n = 0$ for $n \le -1$ and the Laurent series is simply the Taylor series.
+
+In this case, the fact that the coefficient $c_n$ given by the integral formula vanishes for $n \le -1$ follows by Cauchy's theorem (since $(\zeta-z_0)^{-n-1}$ is holomorphic everywhere when $n \le -1$).
+
+\paragraph{Uniqueness and Calculations}
+
+\noindent\textbf{Theorem (Uniqueness of Series).} Laurent and Taylor series are unique. So if I can express $f(z)$ as a power series $\sum_{n=-\infty}^{+\infty} c_n(z-z_0)^n$ using some other method (not necessarily using the integral formula), this is still the Laurent series.
+
+\medskip
+\noindent\textbf{Example.} We can use the fact that $\frac{1}{1-z} = \sum_{n=0}^{+\infty} z^n$ for $|z| < 1$ to expand:
+\[
+    \frac{1}{1+z^2} = \frac{1}{1-(-z^2)} = \sum_{n=0}^{+\infty} (-z^2)^n = \sum_{n=0}^{+\infty} (-1)^n z^{2n} = \sum_{k=0}^{+\infty} c_k \cdot z^k
+\]
+where
+\[
+    c_k = 
+    \begin{cases} 
+        0, & k \text{ odd} \\ 
+        (-1)^{k/2}, & k \text{ even} 
+    \end{cases}
+\]
+
+\subsection{Classification of Singularities}
+
+Any Laurent series splits into its singular and regular parts:
+\[
+    f(z) = \sum_{n=-\infty}^{+\infty} c_n \cdot (z-z_0)^n = \underbrace{\cdots + \frac{c_{-2}}{(z-z_0)^2} + \frac{c_{-1}}{z-z_0}}_{\text{singular part}} + \underbrace{c_0 + c_1(z-z_0) + \cdots}_{\text{regular part}}
+\]
+
+If $f$ can be extended to $z_0$ so that it's holomorphic there: The singular part must vanish (and the regular part is just the Taylor series). (In fact: The opposite is also true).
+
+\subsubsection{Case Study of a Rational Function}
+
+\noindent\textbf{Example.} Let $f: \mathbb{C} \setminus \{0, -1\} \longrightarrow \mathbb{C}$, $f(z) = \frac{1}{z \cdot (z+1)}$. What is the Laurent series of $f$ at $z_0$? What is the radius of convergence? We will consider cases:
+
+\smallskip
+\noindent\textbf{Case $z_0 = 0$:} Observe $f(z) = \frac{1}{z} - \frac{1}{z+1}$.
+Recall: $\frac{1}{1+z} = \frac{1}{1-(-z)} = \sum_{n=0}^{+\infty} (-z)^n = \sum_{n=0}^{+\infty} (-1)^n z^n$ for $|z| < 1$. So,
+\[
+    f(z) = \frac{1}{z} - \sum_{n=0}^{+\infty} (-1)^n z^n = \frac{1}{z} + \sum_{n=0}^{+\infty} (-1)^{n+1} z^n = \sum_{n=-1}^{+\infty} (-1)^{n+1} z^n
+\]
+\textit{Radius of convergence:} $R = 1$ (equal to the distance of $z_0 = 0$ from the nearest point of ``singularity'' of $f$, in this case $z = -1$).
+
+\smallskip
+\noindent\textbf{Case $z_0 = -1$:}
+\[
+    f(z) = \frac{1}{z \cdot (z+1)} = -\frac{1}{z+1} + \frac{1}{z} = -\frac{1}{z-(-1)} + \frac{1}{z}
+\]
+Expand $\frac{1}{z}$ in a Taylor series around $z_0 = -1$:
+\[
+    \frac{1}{z} = \frac{1}{-1 + (z+1)} = -\frac{1}{1 - (z+1)} = -\sum_{n=0}^{+\infty} (z+1)^n
+\]
+which converges for $|z-(-1)| < 1$. So,
+\[
+    f(z) = -\frac{1}{z-(-1)} - \sum_{n=0}^{+\infty} (z-(-1))^n = \sum_{n=-1}^{+\infty} (-1) \cdot (z-(-1))^n
+\]
+\textit{Radius of convergence:} $R = 1$.
+
+\smallskip
+\noindent\textbf{Case $z_0 \ne 0, -1$:} In this case: $f$ is holomorphic on a set containing $z_0$, so it has a regular Taylor series. It converges in any disk centered at $z_0$ which does not contain $0$ or $-1$. So, $R = \min\{|z_0|, |z_0+1|\}$.
+
+\subsubsection{Definitions and Characterizations}
+
+\noindent\textbf{Definition (Regular Point).} We say that $f$ has a \textbf{regular point} at $z_0$ if the singular part of the Laurent series of $f$ at $z_0$ vanishes.
+
+\nopagebreak
+\medskip
+\noindent\textbf{Example.} $f(z) = \sum_{n=0}^{+\infty} \frac{1}{n!} z^n \quad (= e^z)$
+
+\medskip
+\noindent\textbf{Remark.} If $f$ is holomorphic at $z_0$, then $z_0$ is also a regular point. The converse is also true: If $z_0$ is a regular point of $f$, then $\lim_{z \to z_0} f(z)$ exists and if we define $f$ at $z_0$ so that $f(z_0) = \lim_{z \to z_0} f(z)$, then $f$ is holomorphic at $z_0$.
+
+\noindent\textbf{Criterion that we will use:} $z_0$ is a regular point of $f \iff \lim_{z \to z_0} f(z)$ exists.
+
+\pagebreak
+\noindent\textbf{Definition (Pole of Order $m$).} We say that $f$ has a \textbf{pole of order $m$} at $z_0$ if the coefficients of the Laurent series of $f$ at $z_0$ satisfy $c_{-m} \ne 0$, and $c_n = 0$ for $n < -m$.
+
+\medskip
+\noindent\textbf{Example.}
+\begin{itemize}
+    \item $f(z) = \frac{1}{z}$ has a pole of order 1 at $z_0 = 0$.
+    \item $f(z) = \frac{1}{(z+2)^2} + \frac{1}{z}$ has a pole of order 2 at $z_0 = -2$ and a pole of order 1 at $z_0 = 0$.
+\end{itemize}
+
+In the case of a pole of order $m$ at $z_0$:
+\[
+    f(z) = \frac{c_{-m}}{(z-z_0)^m} + \frac{c_{-m+1}}{(z-z_0)^{m-1}} + \cdots + c_0 + c_1(z-z_0) + \cdots
+\]
+\textbf{Note:} $g(z) = (z-z_0)^m \cdot f(z)$ has a regular point at $z_0$!
+
+\medskip
+\noindent\textbf{Definition (Essential Singularity).} We say that $f$ has an \textbf{essential singularity} at $z_0$ if the Laurent series has infinitely many coefficients $c_n \ne 0$ with $n \le -1$.
+
+\medskip
+\noindent\textbf{Example.} $f(z) = e^{1/z}$ at $z_0 = 0$.
+\[
+    f(z) = \sum_{n=0}^{+\infty} \frac{(1/z)^n}{n!} = \sum_{n=-\infty}^{0} \frac{1}{(-n)!} z^n
+\]
+For $f(z) = z \cdot e^{1/z}$ at $z_0 = 0$, the Laurent series is:
+\[
+    z \cdot e^{1/z} = z \cdot \sum_{n=0}^{+\infty} \frac{(1/z)^n}{n!} = \underbrace{z + 1}_{\text{regular part}} + \underbrace{\frac{1}{2! \, z} + \frac{1}{3! \, z^2} + \cdots}_{\text{singular part}}
+\]
+
+\subsection{Study of Quotients}
+
+Suppose that $p, q: D \setminus \{z_0\} \longrightarrow \mathbb{C}$ are holomorphic with $z_0$ being regular for both, and their Laurent series are given by:
+\begin{align*}
+    p(z) &= a_0 + a_1(z-z_0) + a_2(z-z_0)^2 + \cdots \\
+    q(z) &= b_0 + b_1(z-z_0) + b_2(z-z_0)^2 + \cdots
+\end{align*}
+(so $p, q$ extend holomorphically at $z = z_0$).
+
+We want to study the quotient $\frac{p(z)}{q(z)}$ near $z_0$. We want to know what is the order of the poles, if any. We will first look at a few instructive examples.
+
+\subsubsection{Basic Singular Behaviors}
+
+\noindent\textbf{Proposition (a) If $b_0 \ne 0$ (so $q(z_0) \ne 0$):} $\frac{1}{q(z)}$ is holomorphic near $z_0$, and 
+\[
+    \lim_{z \to z_0} f(z) = \lim_{z \to z_0} \frac{p(z)}{q(z)} = \frac{p(z_0)}{q(z_0)} = \frac{a_0}{b_0}
+\]
+So $z_0$ is a regular point for $f$.
+
+\medskip
+\noindent\textbf{Proposition (b) If $a_0 = b_0 = 0$ but $b_1 \ne 0$:}
+\[
+    f(z) = \frac{a_1(z-z_0) + a_2(z-z_0)^2 + \cdots}{b_1(z-z_0) + b_2(z-z_0)^2 + \cdots} = \frac{a_1 + a_2(z-z_0) + \cdots}{b_1 + b_2(z-z_0) + \cdots}
+\]
+So 
+\[
+    \lim_{z \to z_0} f(z) = \frac{a_1}{b_1} \quad \left( = \frac{p'(z_0)}{q'(z_0)} \right) \quad \text{(de L'Hôpital's rule)}
+\]
+So $z_0$ is a regular point for $f$. Similar behavior holds if $a_0 = a_1 = 0$, $b_0 = b_1 = 0$ but $b_2 \ne 0$.
+
+\pagebreak
+\noindent\textbf{Example 1:} Let $f(z) = \frac{z}{\sin(z)}$, $z_0 = 0$.
+\[
+    f(z) = \frac{z}{z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots} = \frac{1}{1 - \frac{z^2}{3!} + \frac{z^4}{5!} - \cdots}
+\]
+So $\lim_{z \to 0} f(z) = 1$. \quad Regular point \checkmark
+
+\medskip
+\noindent\textbf{Example 2:} Let $f(z) = \frac{e^z - 1 - z}{z^2}$, $z_0 = 0$.
+$e^z - 1 - z = \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots$
+So:
+\[
+    \lim_{z \to 0} f(z) = \lim_{z \to 0} \frac{z^2/2! + z^3/3! + \cdots}{z^2} = \frac{1}{2}
+\]
+Regular point \checkmark
+
+\medskip
+\noindent\textbf{In Summary:} Either expand in power series and take out as many common powers of $(z-z_0)$ from the numerator and the denominator as possible and take the limit, \textbf{or} use de L'Hôpital's rule.
+
+\subsubsection{General Pole Orders}
+
+\noindent\textbf{Proposition (c) General Pole Orders.} Suppose that 
+\begin{align*}
+    p(z) &= a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \cdots \quad (a_k \ne 0) \\
+    q(z) &= b_l(z-z_0)^l + b_{l+1}(z-z_0)^{l+1} + \cdots \quad (b_l \ne 0)
+\end{align*}
+and $f(z) = \frac{p(z)}{q(z)}$.
+
+\begin{itemize}
+    \item \textbf{If $k \ge l$}, then $z_0$ is a regular point:
+    \begin{align*}
+        \lim_{z \to z_0} f(z) &= \lim_{z \to z_0} \frac{a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \cdots}{b_l(z-z_0)^l + b_{l+1}(z-z_0)^{l+1} + \cdots} \\
+        &= \lim_{z \to z_0} \frac{a_k(z-z_0)^{k-l} + a_{k+1}(z-z_0)^{k-l+1} + \cdots}{b_l + b_{l+1}(z-z_0) + \cdots} \\
+        &= \begin{cases} 
+            0, & \text{if } k > l, \\ 
+            \frac{a_k}{b_l}, & \text{if } k = l. 
+        \end{cases}
+    \end{align*}
+    The limit exists, so it's a regular point.
+
+    \item \textbf{If $k < l$}: Then $z_0$ is a pole of order $l-k$:
+    \begin{align*}
+        f(z) &= \frac{a_k(z-z_0)^k + a_{k+1}(z-z_0)^{k+1} + \cdots}{b_l(z-z_0)^l + b_{l+1}(z-z_0)^{l+1} + \cdots} \\
+        &= \frac{a_k + a_{k+1}(z-z_0) + \cdots}{b_l(z-z_0)^{l-k} + b_{l+1}(z-z_0)^{l-k+1} + \cdots} \\
+        &= \frac{1}{(z-z_0)^{l-k}} \cdot \frac{a_k + a_{k+1}(z-z_0) + \cdots}{b_l + b_{l+1}(z-z_0) + \cdots}
+    \end{align*}
+    For this last factor, $z_0$ is a regular point, so its Laurent series has only a regular part: $= c_0 + c_1(z-z_0) + \cdots$ where $c_0 = \frac{a_k}{b_l}$.
+    
+    So,
+    \[
+        f(z) = \frac{c_0}{(z-z_0)^{l-k}} + \frac{c_1}{(z-z_0)^{l-k-1}} + \cdots
+    \]
+    So the top order term is: $\frac{1}{(z-z_0)^{l-k}}$.
+\end{itemize}
+
+\medskip
+\noindent\textbf{Example.} Let $f(z) = \frac{\sin(z)}{2z^3 + z^4}$. Show it has a pole of order 2 at $z_0 = 0$.
+
+We know $\sin(z) = z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots$ So,
+\begin{align*}
+    f(z) &= \frac{z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots}{2z^3 + z^4} \\
+    &= \frac{1 - \frac{z^2}{3!} + \frac{z^4}{5!} - \cdots}{2z^2 + z^3} \\
+    &= \frac{1}{z^2} \cdot \underbrace{\frac{1 - \frac{z^2}{3!} + \cdots}{2+z}}_{\text{Regular at } z_0 = 0}
+\end{align*}
+So near $z_0 = 0$:
+\[
+    f(z) = \frac{1}{2z^2} + \frac{c_{-1}}{z} + c_0 + \cdots
+\]
+Hence, it has a pole of order 2.
