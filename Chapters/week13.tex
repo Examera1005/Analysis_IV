@@ -67,7 +67,7 @@ Using this, we can invert $e^{-a^2t}$:
 $$ e^{-a^2t} = e^{-\frac{(\sqrt{2t} \cdot a)^2}{2}} = \frac{1}{\sqrt{2t}} \mathcal{F}\left[ e^{-\frac{1}{2} \left( \frac{x}{\sqrt{2t}} \right)^2} \right](a) = \mathcal{F}\left[ \frac{1}{\sqrt{2t}} e^{-\frac{x^2}{4t}} \right](a) $$
 
 Going back to our ODE solution (2):
-$$ \hat{u}(a,t) = \mathcal{F}\left[ \frac{1}{\sqrt{2t}} e^{-\frac{x^2}{4t}} \right](a) \cdot \mathcal{F}[u_0](a) + \int_0^t \mathcal{F}\left[ \frac{1}{\sqrt{2(t-s)}} e^{-\frac{x^2}{4(t-s)}} \right](a) \cdot \mathcal{F}[f(\cdot,s)](a) \dd s $$
+$$ \hat{u}(a,t) = \mathcal{F}\left[ \frac{1}{\sqrt{2t}} e^{-\frac{x^2}{4t}} \right](a) \cdot \mathcal{F}[u_0](a) + \int_0^t \mathcal{F}\left[ \frac{1}{\sqrt{2(t-s)}} e^{-\frac{x^2}{4(t-s)}} \right](a) \cdot \mathcal{F}[f(x,s)](a) \dd s $$
 
 Inverting (and using the property about convolutions):
 \begin{equation}
@@ -103,7 +103,9 @@ $$ u(x,t) = \frac{1}{\sqrt{4\pi t}} \int_{-\infty}^{+\infty} e^{-\frac{(x-y)^2}{
 
 \begin{theorem}[Duhamel's Principle]
 If $P[u_0](x,t)$ is the above integral expression for the homogeneous case, then the solution in the case when $f \neq 0$ is given by:
-$$ u(x,t) = P[u_0](x,t) + \int_0^t P[f(\cdot, s)](x, t-s) \dd s $$
+\[
+u(x,t) = P[u_0](x,t) + \int_0^t P[f|_{t=s}](x, t-s) \mathrm{d}s
+\]
 \end{theorem}
 
 \subsection{Another Example: Wave Equation}
