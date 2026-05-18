@@ -1,6 +1,6 @@
-markdown_content = """# Analysis IV – Complete Collection of Lecture Notes (1-13)
+# Analysis IV – Complete Collection of Lecture Notes (1-13)
 
-**Date:** May 18, 2026
+**Date:** Spring 2026
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Work in Progress](https://img.shields.io/badge/Status-Review_in_Progress-orange.svg)]()
