@@ -29,9 +29,7 @@ Le fichier PDF sera mis à jour régulièrement au fur et à mesure des retours.
 
 ## 🚀 Comment l'utiliser
 
-Vous pouvez télécharger directement le fichier compilé à jour dans la section **[Releases](https://github.com/)** (ou insérer le lien direct vers le PDF ici).
-
-*   **Recherche rapide :** Utilisez le raccourci `Ctrl + F` (ou `Cmd + F`) dans le PDF pour naviguer instantanément entre les notions de transformées, séries de Fourier, EDP ou analyse complexe.
+Vous pouvez télécharger directement le fichier compilé à jour.
 
 ---
 
