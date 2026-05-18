@@ -1,1 +1,0 @@
-END { system("cp output.pdf mon_resultat.pdf"); }
