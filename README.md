@@ -1,38 +1,44 @@
-# Analyse IV – Recueil Complet des Notes de Cours (1-13)
+markdown_content = """# Analysis IV – Complete Collection of Lecture Notes (1-13)
+
+**Date:** May 18, 2026
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Status: Work in Progress](https://img.shields.io/badge/Status-Review_en_cours-orange.svg)]()
+[![Status: Work in Progress](https://img.shields.io/badge/Status-Review_in_Progress-orange.svg)]()
 
-Ce dépôt contient un document d'étude unique regroupant et structurant l'intégralité des **Lecture Notes 1 à 13** du cours d'**Analyse IV**. L'objectif est de centraliser toute la matière au même endroit pour faciliter les révisions et la recherche rapide de concepts (équations, théorèmes, méthodes de résolution).
+This repository contains a single study document gathering and structuring the entirety of **Lecture Notes 1 to 13** from the **Analysis IV** course. The objective is to centralize all material in one place to facilitate review and the rapid search for concepts (equations, theorems, resolution methods).
 
 ---
 
-## 🛠️ Processus de Création
+## 🛠️ Creation Process
 
-Le document a été généré via un pipeline combinant extraction textuelle, assistance par Intelligence Artificielle pour la structuration/retranscription, et compilation. 
+The document was generated via a pipeline combining textual extraction, Artificial Intelligence assistance for structuring/transcription, and compilation. 
 
 > [!WARNING]
-> **Fiabilité & Limites :** En raison de l'automatisation partielle par IA et de la densité des formules mathématiques, **des erreurs de transcription, des coquilles ou des inversions de symboles peuvent subsister**. Ce document ne remplace pas les documents officiels du cours mais sert de support complémentaire.
+> **Reliability & Limitations:** Due to partial automation by AI and the high density of mathematical formulas, **transcription errors, typos, or symbol inversions may persist**. This document does not replace official course materials but serves as a complementary support.
 
 ---
 
-## 🤝 Contributions et Corrections (Appel à Review)
+## 🤝 Contributions and Corrections (Call for Review)
 
-Afin d'obtenir une version finale parfaitement fiable avant les examens, ce projet repose sur une démarche collaborative. Si vous repérez une erreur (faute de frappe, incohérence mathématique, notation erronée) :
+To obtain a perfectly reliable final version before exams, this project relies on a collaborative approach. If you spot an error (typo, mathematical inconsistency, incorrect notation):
 
-1. **Via GitHub (Recommandé) :** Ouvrez une *Issue* en décrivant l'erreur (mentionnez le chapitre et la page) ou soumettez directement une *Pull Request* si les sources sont disponibles.
-2. **Via Message Privé :** Envoyez-moi un DM ou un e-mail directement avec la correction à apporter.
+1. **Via GitHub (Recommended):** Open an *Issue* describing the error (mentioning the chapter and page) or directly submit a *Pull Request* if the source files are available.
+2. **Via Private Message:** Send me a DM or an email directly with the correction to be made.
 
-Le fichier PDF sera mis à jour régulièrement au fur et à mesure des retours.
-
----
-
-## 🚀 Comment l'utiliser
-
-Vous pouvez télécharger directement le fichier compilé à jour.
+The PDF file will be updated regularly as feedback is received.
 
 ---
 
-## ⚖️ Licence
+## 🚀 How to Use It
 
-Ce projet est partagé sous licence MIT. Libre à vous de le partager et de l'adapter pour vos révisions personnelles.
+You can directly download the up-to-date compiled file.
+
+---
+
+## ⚖️ License
+
+This project is shared under the MIT license. Feel free to share and adapt it for your personal review.
+"""
+
+with open("Analysis_IV_Notes_Readme.md", "w", encoding="utf-8") as f:
+    f.write(markdown_content)
