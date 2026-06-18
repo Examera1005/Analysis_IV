@@ -42,3 +42,14 @@ This project is shared under the MIT license. Feel free to share and adapt it fo
 
 with open("Analysis_IV_Notes_Readme.md", "w", encoding="utf-8") as f:
     f.write(markdown_content)
+
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=Examera1005%2FAnalysis_IV">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Examera1005/Analysis_IV&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Examera1005/Analysis_IV&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Examera1005/Analysis_IV&type=date&legend=top-left" />
+ </picture>
+</a>
